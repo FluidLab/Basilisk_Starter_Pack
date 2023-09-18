@@ -40,11 +40,11 @@ You will see a window that should look something like this:
 
 In the image above there are a few numbered points that you should notice. They are:
 
-1. **Apply button**: after opening the file, make sure to click "Apply" to Paraview processes and renders the file data.
+1. **Apply button**: after opening the file, make sure to click "Apply" so Paraview processes and renders the file data.
 
 2. **Main view**: this is the main view window of your data. You can see the entire Basilisk domain and the colors representing the values of a scalar field.
 
-3. **Timestepping bar**: you can cicle through timesteps using the buttons on this bar.
+3. **Timestepping bar**: you can cycle through timesteps using the buttons on this bar.
 
 4. **Field selection**: the VTK contains the values of multiple scalar fields. You can change which field is being visualized by using this combo box.
 
