@@ -4,7 +4,7 @@ This repository contains a set of examples to get you started with fluid simulat
 
 ## Pre-requisites
 
-You will need an installation of Basilisk in your machine. For the post-processing examples, you will also need an installation of Python. To visualize VTK files, we recommend using Paraview.
+You will need an [installation of Basilisk](http://basilisk.fr/src/INSTALL) in your machine. For the post-processing examples, you will also need an installation of [Python](https://www.python.org/). To visualize VTK files, we recommend using [Paraview](https://www.paraview.org/download/).
 
 ## Example 1: Shear flow of a Saramito fluid
 
