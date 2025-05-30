@@ -31,6 +31,10 @@ double final_time;
 
 int main (int argc, char * argv[]) {
 
+  // === Removing the default dimensions from DT and L0, since we are using nondimensional time and length
+  L0 = 0.0 [0];
+  DT = 0.0 [0];
+
   // Reading some parameters from command line
   if( argc<4 ) {
     printf("Provide parameters please...\n");

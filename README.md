@@ -4,7 +4,42 @@ This repository contains a set of examples to get you started with fluid simulat
 
 ## Pre-requisites
 
-You will need an [installation of Basilisk](http://basilisk.fr/src/INSTALL) in your machine. For the post-processing examples, you will also need an installation of [Python](https://www.python.org/). To visualize VTK files, we recommend using [Paraview](https://www.paraview.org/download/).
+You will need the following in order to go through this tutorial:
+* A linux-based operational system. If you use Windows, you can install the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) through the steps below
+    1. Type `Command Prompt` on the windows Start menu and choose the option `Run as administrator`.
+    2. Run command: `wsl --install`.
+    3. Restart your computer. Make sure you click "Restart" on the windows menu instead of "Shut down" (Yes, they do different things...).
+    4. Open command prompt as administrator again.
+    5. Type `wsl --install` again to finish installation. You will be asked to choose a username and password for your linux system. Note that, on linux terminals, when you type your password the characters do not appear on the screen at all (they are invisible).
+    6. You should now be within your linux system. Check this by using the command "pwd" which should show you "/home/username" or something like that.
+    7. Update your linux package manager with the command: `sudo apt-get update`  (you will be asked for your linux password).
+    8. Install the code compiler with the command: `sudo apt install gcc`.
+    9. Install the program "make" with the command: `sudo apt install make`.
+    10. Tip: if you have never user linux before, read on some of the [important terminal commands](https://www.hostinger.com/tutorials/linux-commands), such as `cd`, `ls`, `pwd`.
+* An [installation of Basilisk](http://basilisk.fr/src/INSTALL) in your linux system.
+    1. Make sure you are on the terminal of your linux system in administrator mode.
+    2. Download the Basilisk source code with the command: `wget http://basilisk.fr/basilisk/basilisk.tar.gz`
+    3. Extract the source code with the command: `tar xzf basilisk.tar.gz`
+    4. Enter the new extracted folder with the command: `cd basilisk/src`
+    5. Prepare the configuration file with the command: `ln -s config.gcc config`
+    6. Compile the code with the command: `make`
+    7. Make sure you are still inside the src folder. Now add basilisk to your machine path with these two commands:
+    `echo "export BASILISK=$PWD" >> ~/.bashrc` and  `echo 'export PATH=$PATH:$BASILISK' >> ~/.bashrc`
+    8. Close the terminal window. Open a new one. Type `qcc`. If the command is found, then Basilisk is installed correctly*.
+        
+        *Note: if everything is fine, you will get a message similar to: `cc: fatal error: no input files`. This means the program `qcc` was found and everything is fine! If `qcc` is NOT found, you will get a message similar to `qcc: command not found`. Then something went wrong in the installation!
+* Installation of [Python3](https://www.python.org/). 
+    1. Check if it is already installed by typing `python` in the terminal of your linux system. Sometimes it is also called `python3`, try that one as well.
+    2. If not, install it with: `sudo apt install python3`.
+    3. Install the python module pip: `sudo apt install python3-pip`
+    4. Install the python module numpy: `python3 -m pip install numpy`
+    5. Install the python module matplotlib: `python3 -m pip install matplotlib`
+    6. Install the python module scipy: `python3 -m pip install scipy`
+* Installation of [Paraview](https://www.paraview.org/download/).
+    1. If you're using Windows as your host machine, I would recommend installing this directly on Windows by downloading the installer from the website.
+    2. If your machine is natively linux, you can install this with: `sudo apt install paraview`.
+* Installation of [Ffmpeg](https://www.paraview.org/download/).
+    1. Within your linux system, you can install this with: `sudo apt install ffmpeg`.
 
 ## Example 1: Shear flow of a Saramito fluid
 
@@ -13,7 +48,7 @@ This example simulates the flow of a Saramito fluid under simple shear. We outpu
 ### Running a simulation
 The first thing to do is compile your code. You can do this using the Basilisk compiler via the following command:  
 
-<code> qcc shear_evp.c -lm -o shear_evp </code>
+<code> qcc shear_evp.c -O2 -Wall -lm -o shear_evp </code>
 
 Now you can run the simulation through the command:
 
@@ -79,7 +114,7 @@ This example simulates the spreading of an elastoviscoplastic droplet due to sur
 
 To compile the example, run:
 
-<code> qcc spreading.c -lm -o spreading </code>
+<code> qcc spreading.c -O2 -Wall -lm -o spreading </code>
 
 Now you can run the simulation through the command:
 
