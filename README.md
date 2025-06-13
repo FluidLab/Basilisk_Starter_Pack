@@ -71,6 +71,7 @@ To visualize these files open Paraview and do:
 <code> File -> Open -> [simulation_folder] -> Mesh-N..vtk </code>
 
 You will see a window that should look something like this:
+
 ![Paraview example](readme_images/paraview_1.png)
 
 In the image above there are a few numbered points that you should notice. They are:
@@ -120,8 +121,7 @@ Now you can run the simulation through the command:
 
 <code> ./spreading 0 0.1 0 1 0.111111 100 1.00E-06 0.001 0.0005 0.0175 10  </code>
 
-We are passing a lot of command line arguments. Try to see what they are by looking at the code. If you really want to understand the meaning of these parameters, you might want to read [Mazi's paper on EVP droplet spreading](https://arxiv.org/abs/2306.06640).
-
+We are passing a lot of command line arguments. Try to see what they are by looking at the code. If you really want to understand the meaning of these parameters, you might want to read [our paper on EVP droplet spreading](https://arxiv.org/abs/2306.06640).
 
 Note that this simulation takes a very long time to finish completely. Make sure you cancel the process after a while.
 
@@ -139,6 +139,7 @@ Open these files in Paraview by doing:
 2. File -> Open -> [simulation_folder] -> Interface-N..vtk -> OK -> Click the "Apply" button
 
 After tweaking some settings, you should see something looking like this:
+
 ![Paraview example](readme_images/paraview_2.png)
 
 In the image above there are a few numbered points that you should notice. They are:
@@ -150,3 +151,35 @@ In the image above there are a few numbered points that you should notice. They 
 3. **Rotation**: for axisymetric simulations, it is often convenient to do a 90 degress rotation in the visualization. 
 
 Make sure you also explore all the Paraview Mesh options mentioned in the first example. In particular: visualizing different scalar fields, visualizing the mesh cells and timestepping over the VTK files. Remember to select the "Mesh" in the Pipeline browser before changing these options!
+
+
+## Example 3: Oscillation of a droplet with odd-viscosity
+
+This example simulates the surface-tension driven oscillations of a droplet with odd viscosity.
+
+### Running the simulation
+
+To compile the example, run:
+
+<code> qcc odd_droplet_oscillations.c -O2 -Wall -lm -o odd_droplet_oscillations </code>
+
+Now you can run the simulation through the command:
+
+<code> ./odd_droplet_oscillations 0.01 0.1 9 0.0001  </code>
+
+
+Again, we are passing a lot of command line arguments. Try to see what they are by looking at the code. The variables "Oh" within the code refer to the Ohnesorge number of the system.
+
+Note that this simulation takes a very long time to finish completely. Make sure you cancel the process after a while.
+
+### Visualizing the output using python
+
+We can also visualize interfacial an scalar field data using Python. An example script is also provided in this package within the "post_proc" folder. You can run it with the command:
+
+<code> python make_video.py </code>
+
+You might need to install some python packages when you run this script for the first time. Also, make sure you adjust the first few lines of the script to match the folder path where your simulation data is.
+ 
+If you run the script, it will generate a video similar to the one below.
+
+![Video: Oscillation of a droplet with odd viscosity](readme_images/gif_droplet_oscillation.gif)
