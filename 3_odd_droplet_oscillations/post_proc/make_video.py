@@ -38,11 +38,13 @@ for vtk_step in list_vtk_steps:
     ax.add_collection(line_collection)
 
     # Plotting a scalar field inside the droplet
+    
     file_name = "%s/MeshDump_%04d.bin" % (base_folder + simulation_folder, vtk_step)
-    cb, fields = plot_mesh_basilisk_solution(file_name, property_name="vorticity",
-                                    chosen_colormap=mpl.cm.coolwarm, crange=[-2.0, 2.0], ax=ax,
-                                    plot_quiver = False)
-    fig.colorbar(cb, ax=ax, orientation="horizontal", shrink=0.8, label="Vorticity", pad=0.03)
+    if( os.path.isfile(file_name) ):
+        cb, fields = plot_mesh_basilisk_solution(file_name, property_name="vorticity",
+                                        chosen_colormap=mpl.cm.coolwarm, crange=[-2.0, 2.0], ax=ax,
+                                        plot_quiver = False)
+        fig.colorbar(cb, ax=ax, orientation="horizontal", shrink=0.8, label="Vorticity", pad=0.03)
 
     # Adding a text label showing the time
     ax.text(0.02, 0.98, "Time = %.2f" % (time), ha="left", va="top", transform=ax.transAxes, fontsize=17)
