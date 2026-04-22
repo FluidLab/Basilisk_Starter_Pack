@@ -31,7 +31,7 @@ def ReadPoint_Float(file):
 	x = struct.unpack('>f', file.read(4))[0]
 	y = struct.unpack('>f', file.read(4))[0]
 	z = struct.unpack('>f', file.read(4))[0]
-	return np.array([x, y])
+	return np.array([x, y, z])
 
 def ReadInt(file):
 	return struct.unpack('>i', file.read(4))[0]
@@ -338,91 +338,110 @@ def read_tracer_particles(filename):
 
 	return points
 
-def read_polydata(filename, rotate=0.0, flip_y=False, color="black", linewidth=1.5, projected_rotation=False):
-	file = open(filename, "rt")
-	line = file.readline()
-	line = file.readline()
-	time = float(line.split()[4])
-	line = file.readline()
-	line = file.readline()
-	line = file.readline()
+def read_polydata(filename : str, only_2D : bool = True, rotate_2D : float = 0.0, flip : str | None = None, 
+				  color : str = "black", color_range = [None, None], colormap = None, number_copies = 1):
+	"""
+	This function reads a VTK file "Interface_XXXX.vtk" coming from one of our Basilisk simulations.
 
-	sin_angle = np.sin(np.pi*rotate/(180.0))
-	cos_angle = np.cos(np.pi*rotate/(180.0))
+	Parameters
+		filename: the name of the interface file
+		2D_only: if this file comes from a 2D simulation, set this as true. If 3D set as false. The output of the function is different in each case.
+		rotate_2D: only relevant if 2D_only=True. You can rotate the visualization by a certain angle. This parameter is that angle (in degrees).
+		flip_y: generate a second data set which is the same as the original, but with the y-coordinates flipped. Cute for axissymetric simulations where only the top half is simulated
+		color: color of the lines of the interface. Can be a matplotlib solid color or the name of a property contained in the VTK file. In this case we will color based on that property with a colormap
+	"""
+
+	file = open(filename, "rb")
+	line = ReadLine_Binary(file)
+	line = ReadLine_Binary(file)
+	time = line.split(" ")[-1]
+	line = ReadLine_Binary(file)
+	line = ReadLine_Binary(file)
+	line = ReadLine_Binary(file)
 	
-	flip_mult = [1.0, -1.0] if flip_y else [1.0, 1.0]
+	# Rotation matrix, which will be used later if requested
+	sin_angle = np.sin(np.pi*rotate_2D/(180.0))
+	cos_angle = np.cos(np.pi*rotate_2D/(180.0))
+	rotation_matrix = np.array([[cos_angle, -sin_angle], [sin_angle, cos_angle]])
 
-	num_points = int( line.split(" ")[1] )
-	points = np.zeros(shape=(num_points, 2))
+	flip = [-1, 1, 1] if flip=="x" else [1, -1, 1] if flip=="y" else None
+
+	# Loading all the points into a numpy [n x 3] array
+	num_points = int( str(line).split(" ")[1] )
+	points = np.zeros(shape=(num_points, 3))
 	for i in range(num_points):
-		line = file.readline()
-		line = line.split(" ")
-		x = float(line[0])
-		y = float(line[1])
+		points[i, :] = ReadPoint_Float(file)
+	flipped_points = flip*points if flip else None
 
-		if( rotate!=0.0 ):
-			points[i, 0] = x*cos_angle - y*sin_angle
-			points[i, 1] = x*sin_angle + y*cos_angle
-		else:
-			points[i, 0] = x
-			points[i, 1] = y
+	# Reading how many lines (in 2D) or polygons we will have
+	line = ReadLine_Binary(file)
+	line = ReadLine_Binary(file)
+	num_polys = int(str(line).split(" ")[1])
 
+	# If 2D: Discarding the third coordinate and applying rotation
+	if( only_2D ):
+		points = np.dot(points[:, :2], rotation_matrix.T)
+		flipped_points = np.dot(flipped_points[:, :2], rotation_matrix.T) if flip else None
 
-
-	line = file.readline()
-	num_polys = int(line.split(" ")[1])
-
+	# Looping over each line (in 2D) or polygon (in 3D) and reading which vertices define it
 	collection = []
 	flipped_collection = []
-	list_polygons = []
-	flipped_list_polygons = []
-
 	segments = []
-	skip_segments = []
+	degenerate_indices = []
 	for i in range(num_polys):
-		line = file.readline()
-		line = line.split(" ")
-		num_vertices = int(line[0])
+		num_vertices = ReadInt(file) # How many vertices in this line/polygon
+		
+		indices_points = [] # List of vertices in this line/polygon
+		for i in range(num_vertices):
+			indices_points.append( ReadInt(file) )
 
+		# Discarding degenerate cases that have less than 2 vertices
 		if( num_vertices<2 ):
-			skip_segments.append(i)
+			degenerate_indices.append( i )
 			continue
 
-		p1 = int(line[1])
-		p2 = int(line[2])
-		segments.append( [p1, p2] )
-		
-		polygon = []
-		polygon.append( points[p1, :] )
-		polygon.append( points[p2, :] )
-		polygon.append( points[p2, :]*[1.0, 0.0] )
-		polygon.append( points[p1, :]*[1.0, 0.0] )
-		list_polygons.append( np.array(polygon) )
-		flipped_list_polygons.append( flip_mult*np.array(polygon) )
+		segments.append( indices_points )
 
-		collection.append(np.array([points[p1, :], points[p2, :]]))
-		
-		if( flip_y ):
-			flipped_collection.append(flip_mult*np.array([points[p1, :], points[p2, :]]))
+		if( only_2D ):
+			collection.append(np.array([points[indices_points[0], :2], points[indices_points[1], :2]]))
+			if( flip ):
+				flipped_collection.append(np.array([flipped_points[indices_points[0], :], flipped_points[indices_points[1], :]]))
+            
 
+	# Now we are going to read the scalar data associated to each polygon
+	line = ReadLine_Binary(file) # New line
+	line = ReadLine_Binary(file) # CELL_DATA X
+	dict_values = {}
+	line = ReadLine_Binary(file) # SCALARS
+	while( (line is not None) and line.split(" ")[0]=="SCALARS" ):
+		field_name = line.split(" ")[1] 
+		line = ReadLine_Binary(file) # LOOKUP_TABLE
+		dict_values[field_name] = np.zeros(shape=(len(segments), ))
+		i_segment = 0
+		for i in range(num_polys):
+			if( not(i in degenerate_indices) ):
+				dict_values[field_name][i_segment] = ReadFloat(file)
+				i_segment += 1
+		line = ReadLine_Binary(file)
+		line = ReadLine_Binary(file)
 
-	line = file.readline()
-	line = file.readline()
-	array_normals = []
-	for i in range(num_polys):
-		line = file.readline()
-		line = line.split(" ")
-
-		if(i in skip_segments):
-			continue
-		array_normals.append( [float(line[0]), float(line[1])] )
-	array_normals = np.array(array_normals)
 	file.close()
 
-	color_poly = "white"
+	if( color in dict_values.keys() ):
+		values = dict_values[color]
+		min_values, max_values = np.min(values), np.max(values)
+		norm_colors = mpl.colors.Normalize(vmin=color_range[0] if color_range[0] else min_values, vmax=color_range[1] if color_range[1] else max_values) 
+		colormap = Colormap('bids:plasma') if colormap is None else colormap
+		color = colormap( norm_colors( values ) )
 
-	line_collection = LineCollection(collection, colors=color, linewidth=linewidth)
-	flipped_line_collection = LineCollection(flipped_collection, colors=color, linewidth=linewidth)
-	# poly_collection = PolyCollection(list_polygons, color=color_poly, linewidth=3)
-	# flipped_poly_collection = PolyCollection(flipped_list_polygons, color=color_poly, linewidth=3)
-	return time, points, segments, array_normals, line_collection, flipped_line_collection
+	if( only_2D ):
+		line_collection = [LineCollection(collection, colors=color) for i in range(number_copies)]
+		flipped_line_collection = [LineCollection(flipped_collection, colors=color) for i in range(number_copies) ] if len(flipped_collection)>0 else None
+		line_collection = line_collection if len(line_collection)>1 else line_collection[0]
+		if( flipped_line_collection is not None ):
+			flipped_line_collection = flipped_line_collection if len(flipped_line_collection)>1 else flipped_line_collection[0]
+
+		return float(time), dict_values, points, segments, line_collection, flipped_line_collection
+	
+	print("ERROR. read_polydata: need to implement 3D version.")
+	exit()

@@ -1,12 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
+import os
 from scipy.integrate import solve_ivp
 font = {'weight' : 'normal', 'size'   : 20}
 matplotlib.rc('font', **font)
 
 # Base folder where Basilisk is outputting the simulation data in your machine
-base_folder = "/mnt/lustre/home/hugof/spreading_paper_code/shear_flow/outputs/"
+base_folder = "../outputs/"
 
 # Parameters to plot. Doing a sweep in Wi for fixed Bi, beta, Re
 # Note: make sure you ran the simulation for these parameters before using this script
@@ -55,19 +56,22 @@ for i_Wi, Wi in enumerate(array_Wi):
 
 	# Numerical solution
 	simulation_folder = "startup_Wi%g_Bi%g_beta%g_Re%g/" % (Wi, Bi, beta, Re)
-	file_name = base_folder + simulation_folder + "log_file.txt"
-	file_data = np.loadtxt(file_name)
-	array_t = file_data[:, 1]
-	array_txx = file_data[:, 3]
-	array_txy = file_data[:, 4]
-	array_tyy = file_data[:, 5]
-	selected_indices = np.array( list(map( find_nearest, t_eval )) )
-	array_t = array_t[selected_indices]
-	array_txx = array_txx[selected_indices]
-	array_txy = array_txy[selected_indices]
-	array_tyy = array_tyy[selected_indices]
-	ax_txx.loglog(array_t, array_txx, 'o', color=array_colors[i_Wi], fillstyle="none")
-	ax_txy.loglog(array_t, array_txy, 'o', label = "Wi = %g" % (Wi), color=array_colors[i_Wi], fillstyle="none")
+	file_name = base_folder + simulation_folder + "log_file_0.txt"
+	if( os.path.isfile(file_name) ):
+		file_data = np.loadtxt(file_name)
+		array_t = file_data[:, 1]
+		array_txx = file_data[:, 3]
+		array_txy = file_data[:, 4]
+		array_tyy = file_data[:, 5]
+		selected_indices = np.array( list(map( find_nearest, t_eval )) )
+		array_t = array_t[selected_indices]
+		array_txx = array_txx[selected_indices]
+		array_txy = array_txy[selected_indices]
+		array_tyy = array_tyy[selected_indices]
+		ax_txx.loglog(array_t, array_txx, 'o', color=array_colors[i_Wi], fillstyle="none")
+		ax_txy.loglog(array_t, array_txy, 'o', label = "Wi = %g" % (Wi), color=array_colors[i_Wi], fillstyle="none")
+	else:
+		print("WARNING. Could not find Basilisk output file: ", file_name)
 	
 
 ax_txy.legend()
@@ -90,5 +94,6 @@ ax_txx.set_ylabel(r"Stress: $\tau_{xx}$ [nondim]")
 plt.suptitle(r"Fixed: $Bi = %g$       $\beta = %g$   %s" % (Bi, beta, "(viscoelastic)" if Bi==0 else ""))
 plt.tight_layout()
 plt.savefig("startup_Bi%g.png" % (Bi))
+plt.show()
 
 print("\n\nFinished. A figure was created in the current folder.")

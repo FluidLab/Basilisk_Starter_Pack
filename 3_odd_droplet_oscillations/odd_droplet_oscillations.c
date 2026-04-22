@@ -5,7 +5,7 @@
 #include "headers/two-phase_odd.h"
 #include "tension.h"
 #include "headers/vof-tracer-particles.h"
-#include "headers/utility_functions.h"
+#include "../fluidlab_headers/fluidlab_pack.h"
 
 Particles Pin;
 
@@ -240,23 +240,17 @@ event print_solution_mesh(t+=0.05) {
 
   scalar *list_scalars = {p, w_vort, flow_type, f};
   const char *scalar_names[] = {"p", "vorticity", "flow_type", "fractions"};
-  vector *list_vectors = {u, force_odd};
-  const char *vector_names[] = {"u", "force_odd"};
-  PrintMeshVTK_Binary_Float(vtk_step, t, true, 
-                            list_scalar_data=list_scalars, list_scalar_names=scalar_names,
-                            list_vector_data=list_vectors, list_vector_names=vector_names);
+  PrintMeshVTK(t, true, list_scalar_data=list_scalars, list_scalar_names=scalar_names);
 
   scalar *list_all_scalars = {u.x, u.y, p, w_vort, flow_type, force_odd.x, force_odd.y, f};
   const char *all_scalar_names[] = {"ux", "uy", "p", "vorticity", "flow_type", "force_odd_x", "force_odd_y", "fractions"};
-  PrintUniformMeshDataDump(vtk_step, t, 100, 100, 
-                              list_all_scalars, all_scalar_names,
-                              inside_only = true);
+  PrintUniformMeshDataDump(t, 100, 100, list_all_scalars, all_scalar_names, inside_only = true);
 
-  PrintInterfaceVTK(vtk_step, t);
+  PrintInterfaceVTK(t);
 
-  PrintTracerParticlesVTK(vtk_step, t, Pin);
+  PrintTracerParticlesVTK(t, Pin);
 
-  vtk_step++;
+  UpdateMeshOutputSeriesFile(t);
 }
 
 

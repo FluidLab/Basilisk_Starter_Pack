@@ -1,16 +1,16 @@
 #include "navier-stokes/centered.h"
 #include "two-phase.h" // I didnt need to use two-phase here to be honest
 #include "log-conform.h"
-#include "fluidlab_pack.h"
+#include "../fluidlab_headers/fluidlab_pack.h"
 
 // Comment or uncomment the line below to do Oscillatory shear or start-up shear flow
 // #define OSCILLATORY 1
 
 // Saramito parameters
 double Re = 0.1; // Reynolds number
-double Bi = 3.0; // Bingham number
-double Wi = 0.1; // Weissenberg number
-double beta = 0.1111; // Viscosity ratio
+double Bi; // Bingham number
+double Wi; // Weissenberg number
+double beta; // Viscosity ratio
 double regularization = 1e-5; // Regularization parameter
 
 scalar lambdav[], mupv[];
@@ -64,11 +64,11 @@ int main (int argc, char * argv[]) {
   TOLERANCE = 1e-4;
 
   #ifdef OSCILLATORY
-    OpenSimulationFolder("oscillatory_Wi%g_Bi%g_beta%g_Re%g", Wi, Bi, beta, Re);
+    OpenSimulationFolder(false, "oscillatory_Wi%g_Bi%g_beta%g_Re%g", Wi, Bi, beta, Re);
     int number_periods = 5.0;
     final_time = number_periods*2.0*M_PI;
   #else
-    OpenSimulationFolder("startup_Wi%g_Bi%g_beta%g_Re%g", Wi, Bi, beta, Re);
+    OpenSimulationFolder(false, "startup_Wi%g_Bi%g_beta%g_Re%g", Wi, Bi, beta, Re);
     final_time = 100.0; // NOTE: You will a need longer final_time if Wi is really large
   #endif
 
@@ -114,15 +114,17 @@ event logfile (i += 1; t<=final_time) {
   double difference = change_txx + change_txy + change_tyy;
 
   // Printing some stuff to a log file
-  printf("Time step (%d, %lf, %g): %e ... %e %e %e\n", i, t, dt, difference, txx, txy, tyy);
-  PrintLog("%d %lf %e %e %e %e\n", i, t, difference, txx, txy, tyy);
+  PrintLog(true, "%d %lf %e %e %e %e\n", i, t, difference, txx, txy, tyy);
 }
 
 event print_solution(t+=10.0) {
+
   /// === Printing the properties below into a VTK file. Can be viewed in Paraview
   scalar *list = {u.x, p, tau_p.x.x, tau_p.x.y, tau_p.y.y};
   const char *list_names[] = {"vel-u", "pressure", "taup_xx", "taup_xy", "taup_yy"};
-  PrintMeshVTK_Binary_Float(i, t, list, list_names);
+  PrintMeshVTK(t, false, list, list_names);
+
+  UpdateMeshOutputSeriesFile(t);
 }
 
 event init (t = 0) {

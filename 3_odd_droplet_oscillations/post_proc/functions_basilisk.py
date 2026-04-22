@@ -7,7 +7,7 @@ from view_functions import *
 def find_all_vtk_steps(results_folder):
     if( os.path.isdir(results_folder) ):
         list_files = os.listdir(results_folder)
-        list_vtk_files = np.sort([int(file.split("Interface_")[1][:-4]) for file in list_files if file.startswith("Interface")])
+        list_vtk_files = np.sort( [float(file.split("Interface_")[1][:-4]) for file in list_files if file.startswith("Interface_")] )
     else:
         print("Folder not found: ", results_folder)
         exit()

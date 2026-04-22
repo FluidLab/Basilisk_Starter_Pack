@@ -8,7 +8,7 @@
 #include "log-conform.h"
 #include "tension.h"
 #include "distance.h"
-#include "fluidlab_pack.h"
+#include "../fluidlab_headers/fluidlab_pack.h"
 
 // Parameters from the navier-stokes + Saramito equations
 double Bo = 0.0; // Bond number
@@ -100,7 +100,7 @@ int main (int argc, char * argv[]) {
   mup = mupv;
   lambda = lambdav;
 
-  OpenSimulationFolder("spreading_film%g_reg%.1e_mesh%d_J%g_Oh%g_Bo%g_Wi%g_beta%g", h_inf, regularization, mesh_level, J, Oh, Bo, Wi, beta);
+  OpenSimulationFolder(false, "spreading_film%g_reg%.1e_mesh%d_J%g_Oh%g_Bo%g_Wi%g_beta%g", h_inf, regularization, mesh_level, J, Oh, Bo, Wi, beta);
   
   // Running the simulation
   run();
@@ -323,8 +323,7 @@ event logfile (t+=0.001; t<=200.0) {
   CalculateDistanceFunction(distance_field);
 
   // PrintLog("%d %lf %e %lf %e %lf %lf %lf %lf %lf %lf %lf %lf\n", i, t, dt, cpu_time_used, kinetic_energy, droplet_radius, droplet_height, temp_droplet_radius[1], temp_droplet_radius[2], surface_energy, dissipated_energy, total_energy, total_energy-25.0*pi);
-  PrintLog("%d %lf %e %lf %e %lf %lf %lf %lf\n", i, t, dt, cpu_time_used, kinetic_energy, droplet_radius, droplet_height, temp_droplet_radius[1], temp_droplet_radius[2]);
-  printf("%d %lf %e %lf %e %lf %lf %lf %lf\n", i, t, dt, cpu_time_used, kinetic_energy, droplet_radius, droplet_height, temp_droplet_radius[1], temp_droplet_radius[2]);
+  PrintLog(true, "%d %lf %e %lf %e %lf %lf %lf %lf\n", i, t, dt, cpu_time_used, kinetic_energy, droplet_radius, droplet_height, temp_droplet_radius[1], temp_droplet_radius[2]);
 }
 
 // Prints solutions very often up to t=10
@@ -334,7 +333,11 @@ event print_solution_mesh(t+=0.01) {
 
   scalar *list = {u.x, u.y, yielded, log_norm_tau_dev_field, D2, flow_type};
   const char *list_names[] = {"ux", "uy", "yielded", "tau_dev", "log_D2", "flow_type"};
-  PrintMeshVTK_Binary_Float(i, t, list, list_names);
+  PrintMeshVTK(t, false, list, list_names);
+
+  PrintInterfaceVTK(t);
+
+  UpdateMeshOutputSeriesFile(t);
 }
 
 // Prints solutions more rarely later on
@@ -344,23 +347,13 @@ event print_solution_mesh_2(t+=1) {
 
   scalar *list = {u.x, u.y, yielded, log_norm_tau_dev_field, D2, flow_type};
   const char *list_names[] = {"ux", "uy", "yielded", "tau_dev", "log_D2", "flow_type"};
-  PrintMeshVTK_Binary_Float(i, t, list, list_names);
+  
+  PrintMeshVTK(t, false, list, list_names);
+
+  PrintInterfaceVTK(t);
+
+  UpdateMeshOutputSeriesFile(t);
 }
-
-event print_solution_interface(t+=0.01) {
-// event print_solution_mesh(i+=10) {
-  if( t>=10 )
-    return 0;
-  PrintInterfaceVTK(i, t);
-}
-
-event print_solution_interface_2(t+=1) {
-  if( t<10 )
-    return 0;
-  PrintInterfaceVTK(i, t);
-}
-
-
 
 event init (t = 0) {  
 

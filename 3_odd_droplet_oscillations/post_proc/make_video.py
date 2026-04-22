@@ -8,10 +8,10 @@ Oh_even = 0.01
 Oh_odd = 0.1
 mesh_level = 9
 dt = 0.0001
-base_folder = "D:/share/basilisk_codes/git_stuff/Basilisk_Starter_Pack/3_odd_droplet_oscillations/outputs/"
+base_folder = "../outputs/"
 simulation_folder = "odd_oscillations_DT%g_mesh%d_OhE%g_OhO%g/" % (dt, mesh_level, Oh_even, Oh_odd)
 
-list_vtk_steps = find_all_vtk_steps(base_folder + simulation_folder)
+list_vtk_times = find_all_vtk_steps(base_folder + simulation_folder)
 
 frames_folder = "frames"
 if( not os.path.isdir(frames_folder) ):
@@ -19,12 +19,12 @@ if( not os.path.isdir(frames_folder) ):
 # os.system("rm frames/*.png")
 
 # Loading the log_file which constains data over time like the average vorticity, droplet size, etc
-filedata = np.loadtxt("%s/log_file.txt" % (base_folder + simulation_folder))
+filedata = np.loadtxt("%s/log_file_0.txt" % (base_folder + simulation_folder))
 log_array_time = filedata[:, 1]
 log_array_avg_vorticity = filedata[:, 8]
 
 i_frame = 0
-for vtk_step in list_vtk_steps:
+for i_vtk, vtk_time in enumerate(list_vtk_times):
 
     fig, (ax, ax_curve) = plt.subplots(1, 2, figsize=(12, 8))
     ax.set_aspect("equal", adjustable="box")
@@ -33,13 +33,13 @@ for vtk_step in list_vtk_steps:
     ax.tick_params(left = False, labelleft = False, labelbottom = False, bottom = False)
 
     # Plotting the interface of the droplet
-    file_name = "%s/Interface_%04d.vtk" % (base_folder + simulation_folder, vtk_step)
-    time, points, segments, normals, line_collection, _ = read_polydata(file_name, color="black", linewidth=3)
+    file_name = "%s/Interface_%.5f.vtk" % (base_folder + simulation_folder, vtk_time)
+    time, _, points, segments, line_collection, _ = read_polydata(file_name, color="black")
     ax.add_collection(line_collection)
 
     # Plotting a scalar field inside the droplet
     
-    file_name = "%s/MeshDump_%04d.bin" % (base_folder + simulation_folder, vtk_step)
+    file_name = "%s/MeshDump_%.5f.bin" % (base_folder + simulation_folder, vtk_time)
     if( os.path.isfile(file_name) ):
         cb, fields = plot_mesh_basilisk_solution(file_name, property_name="vorticity",
                                         chosen_colormap=mpl.cm.coolwarm, crange=[-2.0, 2.0], ax=ax,
@@ -59,7 +59,7 @@ for vtk_step in list_vtk_steps:
     plt.tight_layout()
     plt.savefig("%s/frame%04d.png" % (frames_folder, i_frame))
     plt.close()
-    print("Made video frame %d out of %d ... " % (vtk_step, list_vtk_steps[-1]))
+    print("Made video frame %f out of %f ... " % (vtk_time, list_vtk_times[-1]))
     i_frame += 1
     # exit()
 

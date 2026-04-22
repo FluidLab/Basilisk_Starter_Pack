@@ -48,11 +48,11 @@ This example simulates the flow of a Saramito fluid under simple shear. We outpu
 ### Running a simulation
 The first thing to do is compile your code. You can do this using the Basilisk compiler via the following command:  
 
-<code> qcc shear_evp.c -O2 -Wall -lm -o shear_evp </code>
+<code> qcc shear_evp.c -O2 -lm -o shear_evp </code>
 
 Now you can run the simulation through the command:
 
-<code> ./shear_evp 0.05 1 0.111111  </code>
+<code> ./shear_evp 0.05 3 0.111111  </code>
 
 Note that we are passing 3 values as parameters to the simulation. Look into the code file and try to understand what each of these parameters represent.
 
@@ -66,9 +66,9 @@ Sometimes you don't want to run the simulation all the way till the end. You can
 
 In the subfolder that was created by the simulation, you will find VTK files. Each file corresponds to an individual timestep in the simulation. Try to find in the code where we are generating these files and how often they are being printed. 
 
-To visualize these files open Paraview and do:
+You can open these files in Paraview by doing:
 
-<code> File -> Open -> [simulation_folder] -> Mesh-N..vtk </code>
+1. File -> Open -> [simulation_folder] -> Mesh.vtk.series -> OK -> Click the "Apply" button
 
 You will see a window that should look something like this:
 
@@ -115,7 +115,7 @@ This example simulates the spreading of an elastoviscoplastic droplet due to sur
 
 To compile the example, run:
 
-<code> qcc spreading.c -O2 -Wall -lm -o spreading </code>
+<code> qcc spreading.c -O2 -lm -o spreading </code>
 
 Now you can run the simulation through the command:
 
@@ -127,16 +127,17 @@ Note that this simulation takes a very long time to finish completely. Make sure
 
 ### Visualizing the VTK files
 
-This example contains an interfacial boundary between two fluids (droplet and air). As such, two types of VTK files will be output in the folder:
+This example contains an interfacial boundary between two fluids (droplet and ambient). As such, two types of VTK files will be created in the putputs folder:
 
-1. Mesh files: containing all the scalar field data in the mesh (same as in example 1)
-2. Interface files: contains an outline that indicates the location of the interface between the two fluids
+1. Mesh files: containing all the scalar field data in the computational mesh.
+   
+2. Interface files: contains an outline that indicates the location of the interface between the droplet and the surrounding fluid (it is not a vacuum!)
 
 Open these files in Paraview by doing:
 
-1. File -> Open -> [simulation_folder] -> Mesh-N..vtk -> OK -> Click the "Apply" button
+1. File -> Open -> [simulation_folder] -> Mesh.vtk.series -> OK -> Click the "Apply" button
 
-2. File -> Open -> [simulation_folder] -> Interface-N..vtk -> OK -> Click the "Apply" button
+2. File -> Open -> [simulation_folder] -> Interface.vtk.series -> OK -> Click the "Apply" button
 
 After tweaking some settings, you should see something looking like this:
 
