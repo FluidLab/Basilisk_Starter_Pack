@@ -1109,163 +1109,275 @@ Visual Studio-like style based on original C# coloring by Jason Diamond <jason@d
 
     </head>
     <body class="vscode-body vscode-light">
-        <h1 data-line="0" class="code-line" dir="auto" id="basilisk-starter-pack" tabindex="-1">Basilisk Starter Pack</h1>
-<p data-line="2" class="code-line" dir="auto">This repository contains a set of examples to get you started with fluid simulations in Basilisk. These examples contain visualization and data output choices that we often use in the FluidLab, for example, outputting VTK files and visualizing in Paraview.</p>
-<h2 data-line="4" class="code-line" dir="auto" id="pre-requisites" tabindex="-1">Pre-requisites</h2>
-<p data-line="6" class="code-line" dir="auto">You will need the following in order to go through this tutorial:</p>
-<ul data-line="7" class="code-line" dir="auto">
-<li data-line="7" class="code-line" dir="auto">A linux-based operational system. If you use Windows, you can install the <a href="https://learn.microsoft.com/en-us/windows/wsl/install" data-href="https://learn.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux (WSL)</a> through the steps below
-<ol data-line="8" class="code-line" dir="auto">
-<li data-line="8" class="code-line" dir="auto">Type <code>Command Prompt</code> on the windows Start menu and choose the option <code>Run as administrator</code>.</li>
-<li data-line="9" class="code-line" dir="auto">Run command: <code>wsl --install</code>.</li>
-<li data-line="10" class="code-line" dir="auto">Restart your computer. Make sure you click "Restart" on the windows menu instead of "Shut down" (Yes, they do different things...).</li>
-<li data-line="11" class="code-line" dir="auto">Open command prompt as administrator again.</li>
-<li data-line="12" class="code-line" dir="auto">Type <code>wsl --install</code> again to finish installation. You will be asked to choose a username and password for your linux system. Note that, on linux terminals, when you type your password the characters do not appear on the screen at all (they are invisible).</li>
-<li data-line="13" class="code-line" dir="auto">You should now be within your linux system. Check this by using the command "pwd" which should show you "/home/username" or something like that.</li>
-<li data-line="14" class="code-line" dir="auto">Update your linux package manager with the command: <code>sudo apt-get update</code>  (you will be asked for your linux password).</li>
-<li data-line="15" class="code-line" dir="auto">Install the code compiler with the command: <code>sudo apt install gcc</code>.</li>
-<li data-line="16" class="code-line" dir="auto">Install the program "make" with the command: <code>sudo apt install make</code>.</li>
-<li data-line="17" class="code-line" dir="auto">Tip: if you have never user linux before, read on some of the <a href="https://www.hostinger.com/tutorials/linux-commands" data-href="https://www.hostinger.com/tutorials/linux-commands">important terminal commands</a>, such as <code>cd</code>, <code>ls</code>, <code>pwd</code>.</li>
+        <h1 id="basilisk-starter-pack" tabindex="-1">Basilisk Starter Pack</h1>
+<p>This repository contains a set of examples to get you started with fluid simulations in Basilisk. These examples contain visualization and data output choices that we often use in the FluidLab, for example, outputting VTK files and visualizing in Paraview.</p>
+<h2 id="pre-requisites" tabindex="-1">Pre-requisites</h2>
+<p>You will need the following in order to go through this tutorial:</p>
+<ul>
+<li>A linux-based operational system. If you use Windows, you can install the <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux (WSL)</a> through the steps below
+<ol>
+<li>Type <code>Command Prompt</code> on the windows Start menu and choose the option <code>Run as administrator</code>.</li>
+<li>Run command: <code>wsl --install</code>.</li>
+<li>Restart your computer. Make sure you click "Restart" on the windows menu instead of "Shut down" (Yes, they do different things...).</li>
+<li>Open command prompt as administrator again.</li>
+<li>Type <code>wsl --install</code> again to finish installation. You will be asked to choose a username and password for your linux system. Note that, on linux terminals, when you type your password the characters do not appear on the screen at all (they are invisible).</li>
+<li>You should now be within your linux system. Check this by using the command "pwd" which should show you "/home/username" or something like that.</li>
+<li>Update your linux package manager with the command: <code>sudo apt-get update</code>  (you will be asked for your linux password).</li>
+<li>Install the code compiler with the command: <code>sudo apt install gcc</code>.</li>
+<li>Install the program "make" with the command: <code>sudo apt install make</code>.</li>
+<li>Tip: if you have never user linux before, read on some of the <a href="https://www.hostinger.com/tutorials/linux-commands">important terminal commands</a>, such as <code>cd</code>, <code>ls</code>, <code>pwd</code>.</li>
 </ol>
 </li>
-<li data-line="18" class="code-line" dir="auto">An <a href="http://basilisk.fr/src/INSTALL" data-href="http://basilisk.fr/src/INSTALL">installation of Basilisk</a> in your linux system.
-<ol data-line="19" class="code-line" dir="auto">
-<li data-line="19" class="code-line" dir="auto">
-<p data-line="19" class="code-line" dir="auto">Make sure you are on the terminal of your linux system in administrator mode.</p>
+<li>An <a href="http://basilisk.fr/src/INSTALL">installation of Basilisk</a> in your linux system.
+<ol>
+<li>
+<p>Make sure you are on the terminal of your linux system in administrator mode.</p>
 </li>
-<li data-line="20" class="code-line" dir="auto">
-<p data-line="20" class="code-line" dir="auto">Download the Basilisk source code with the command: <code>wget http://basilisk.fr/basilisk/basilisk.tar.gz</code></p>
+<li>
+<p>Download the Basilisk source code with the command: <code>wget http://basilisk.fr/basilisk/basilisk.tar.gz</code></p>
 </li>
-<li data-line="21" class="code-line" dir="auto">
-<p data-line="21" class="code-line" dir="auto">Extract the source code with the command: <code>tar xzf basilisk.tar.gz</code></p>
+<li>
+<p>Extract the source code with the command: <code>tar xzf basilisk.tar.gz</code></p>
 </li>
-<li data-line="22" class="code-line" dir="auto">
-<p data-line="22" class="code-line" dir="auto">Enter the new extracted folder with the command: <code>cd basilisk/src</code></p>
+<li>
+<p>Enter the new extracted folder with the command: <code>cd basilisk/src</code></p>
 </li>
-<li data-line="23" class="code-line" dir="auto">
-<p data-line="23" class="code-line" dir="auto">Prepare the configuration file with the command: <code>ln -s config.gcc config</code></p>
+<li>
+<p>Prepare the configuration file with the command: <code>ln -s config.gcc config</code></p>
 </li>
-<li data-line="24" class="code-line" dir="auto">
-<p data-line="24" class="code-line" dir="auto">Compile the code with the command: <code>make</code></p>
+<li>
+<p>Compile the code with the command: <code>make</code></p>
 </li>
-<li data-line="25" class="code-line" dir="auto">
-<p data-line="25" class="code-line" dir="auto">Make sure you are still inside the src folder. Now add basilisk to your machine path with these two commands:
+<li>
+<p>Make sure you are still inside the src folder. Now add basilisk to your machine path with these two commands:
 <code>echo "export BASILISK=$PWD" &gt;&gt; ~/.bashrc</code> and  <code>echo 'export PATH=$PATH:$BASILISK' &gt;&gt; ~/.bashrc</code></p>
 </li>
-<li data-line="27" class="code-line" dir="auto">
-<p data-line="27" class="code-line" dir="auto">Close the terminal window. Open a new one. Type <code>qcc</code>. If the command is found, then Basilisk is installed correctly*.</p>
-<p data-line="29" class="code-line" dir="auto">*Note: if everything is fine, you will get a message similar to: <code>cc: fatal error: no input files</code>. This means the program <code>qcc</code> was found and everything is fine! If <code>qcc</code> is NOT found, you will get a message similar to <code>qcc: command not found</code>. Then something went wrong in the installation!</p>
+<li>
+<p>Close the terminal window. Open a new one. Type <code>qcc</code>. If the command is found, then Basilisk is installed correctly*.</p>
+<p>*Note: if everything is fine, you will get a message similar to: <code>cc: fatal error: no input files</code>. This means the program <code>qcc</code> was found and everything is fine! If <code>qcc</code> is NOT found, you will get a message similar to <code>qcc: command not found</code>. Then something went wrong in the installation!</p>
 </li>
 </ol>
 </li>
-<li data-line="30" class="code-line" dir="auto">Installation of <a href="https://www.python.org/" data-href="https://www.python.org/">Python3</a>.
-<ol data-line="31" class="code-line" dir="auto">
-<li data-line="31" class="code-line" dir="auto">Check if it is already installed by typing <code>python</code> in the terminal of your linux system. Sometimes it is also called <code>python3</code>, try that one as well.</li>
-<li data-line="32" class="code-line" dir="auto">If not, install it with: <code>sudo apt install python3</code>.</li>
-<li data-line="33" class="code-line" dir="auto">Install the python module pip: <code>sudo apt install python3-pip</code></li>
-<li data-line="34" class="code-line" dir="auto">Install the python module numpy: <code>python3 -m pip install numpy</code></li>
-<li data-line="35" class="code-line" dir="auto">Install the python module matplotlib: <code>python3 -m pip install matplotlib</code></li>
-<li data-line="36" class="code-line" dir="auto">Install the python module scipy: <code>python3 -m pip install scipy</code></li>
+<li>Installation of <a href="https://www.python.org/">Python3</a>.
+<ol>
+<li>Check if it is already installed by typing <code>python</code> in the terminal of your linux system. Sometimes it is also called <code>python3</code>, try that one as well.</li>
+<li>If not, install it with: <code>sudo apt install python3</code>.</li>
+<li>Install the python module pip: <code>sudo apt install python3-pip</code></li>
+<li>Install the python module numpy: <code>python3 -m pip install numpy</code></li>
+<li>Install the python module matplotlib: <code>python3 -m pip install matplotlib</code></li>
+<li>Install the python module scipy: <code>python3 -m pip install scipy</code></li>
 </ol>
 </li>
-<li data-line="37" class="code-line" dir="auto">Installation of <a href="https://www.paraview.org/download/" data-href="https://www.paraview.org/download/">Paraview</a>.
-<ol data-line="38" class="code-line" dir="auto">
-<li data-line="38" class="code-line" dir="auto">If you're using Windows as your host machine, I would recommend installing this directly on Windows by downloading the installer from the website.</li>
-<li data-line="39" class="code-line" dir="auto">If your machine is natively linux, you can install this with: <code>sudo apt install paraview</code>.</li>
+<li>Installation of <a href="https://www.paraview.org/download/">Paraview</a>.
+<ol>
+<li>If you're using Windows as your host machine, I would recommend installing this directly on Windows by downloading the installer from the website.</li>
+<li>If your machine is natively linux, you can install this with: <code>sudo apt install paraview</code>.</li>
 </ol>
 </li>
-<li data-line="40" class="code-line" dir="auto">Installation of <a href="https://www.paraview.org/download/" data-href="https://www.paraview.org/download/">Ffmpeg</a>.
-<ol data-line="41" class="code-line" dir="auto">
-<li data-line="41" class="code-line" dir="auto">Within your linux system, you can install this with: <code>sudo apt install ffmpeg</code>.</li>
+<li>Installation of <a href="https://www.paraview.org/download/">Ffmpeg</a>.
+<ol>
+<li>Within your linux system, you can install this with: <code>sudo apt install ffmpeg</code>.</li>
 </ol>
 </li>
 </ul>
-<h2 data-line="43" class="code-line" dir="auto" id="example-1-shear-flow-of-a-saramito-fluid" tabindex="-1">Example 1: Shear flow of a Saramito fluid</h2>
-<p data-line="45" class="code-line" dir="auto">This example simulates the flow of a Saramito fluid under simple shear. We output the polymeric stress over time and compare to a semi-analytical solution. VTK files are also created and these can be visualized in Paraview.</p>
-<h3 data-line="47" class="code-line" dir="auto" id="running-a-simulation" tabindex="-1">Running a simulation</h3>
-<p data-line="48" class="code-line" dir="auto">The first thing to do is compile your code. You can do this using the Basilisk compiler via the following command:</p>
-<p data-line="50" class="code-line" dir="auto"><code> qcc shear_evp.c -O2 -Wall -lm -o shear_evp </code></p>
-<p data-line="52" class="code-line" dir="auto">Now you can run the simulation through the command:</p>
-<p data-line="54" class="code-line" dir="auto"><code> ./shear_evp 0.05 1 0.111111  </code></p>
-<p data-line="56" class="code-line" dir="auto">Note that we are passing 3 values as parameters to the simulation. Look into the code file and try to understand what each of these parameters represent.</p>
-<p data-line="58" class="code-line" dir="auto">While the simulation runs you will see a bunch of numbers being output to the screen. Once again, look into the code file and try to find out what they mean. Hint: look at the <strong>logfile</strong> event.</p>
-<p data-line="60" class="code-line" dir="auto">A subfolder for this simulation will also be automatically created inside the folder <strong>outputs</strong>. In this subfolder we are saving some log data and also the VTK files to be visualized.</p>
-<p data-line="62" class="code-line" dir="auto">Sometimes you don't want to run the simulation all the way till the end. You can manually cancel a linux process by using <strong>Ctrl + C</strong> in the terminal window.</p>
-<h3 data-line="64" class="code-line" dir="auto" id="visualizing-vtk-files" tabindex="-1">Visualizing VTK files</h3>
-<p data-line="66" class="code-line" dir="auto">In the subfolder that was created by the simulation, you will find VTK files. Each file corresponds to an individual timestep in the simulation. Try to find in the code where we are generating these files and how often they are being printed.</p>
-<p data-line="68" class="code-line" dir="auto">To visualize these files open Paraview and do:</p>
-<p data-line="70" class="code-line" dir="auto"><code> File -&gt; Open -&gt; [simulation_folder] -&gt; Mesh-N..vtk </code></p>
-<p data-line="72" class="code-line" dir="auto">You will see a window that should look something like this:
-<img src="readme_images/paraview_1.png" alt="Paraview example" data-src="readme_images/paraview_1.png"></p>
-<p data-line="75" class="code-line" dir="auto">In the image above there are a few numbered points that you should notice. They are:</p>
-<ol data-line="77" class="code-line" dir="auto">
-<li data-line="77" class="code-line" dir="auto">
-<p data-line="77" class="code-line" dir="auto"><strong>Apply button</strong>: after opening the file, make sure to click "Apply" so Paraview processes and renders the file data.</p>
+<h2 id="example-1-shear-flow-of-a-saramito-fluid" tabindex="-1">Example 1: Shear flow of a Saramito fluid</h2>
+<p>This example simulates the flow of a Saramito fluid under simple shear. We output the polymeric stress over time and compare to a semi-analytical solution. VTK files are also created and these can be visualized in Paraview.</p>
+<h3 id="running-a-simulation" tabindex="-1">Running a simulation</h3>
+<p>The first thing to do is compile your code. You can do this using the Basilisk compiler via the following command:</p>
+<p><code> qcc shear_evp.c -O2 -lm -o shear_evp </code></p>
+<p>Now you can run the simulation through the command:</p>
+<p><code> ./shear_evp 0.05 3 0.111111  </code></p>
+<p>Note that we are passing 3 values as parameters to the simulation. Look into the code file and try to understand what each of these parameters represent.</p>
+<p>While the simulation runs you will see a bunch of numbers being output to the screen. Once again, look into the code file and try to find out what they mean. Hint: look at the <strong>logfile</strong> event.</p>
+<p>A subfolder for this simulation will also be automatically created inside the folder <strong>outputs</strong>. In this subfolder we are saving some log data and also the VTK files to be visualized.</p>
+<p>Sometimes you don't want to run the simulation all the way till the end. You can manually cancel a linux process by using <strong>Ctrl + C</strong> in the terminal window.</p>
+<h3 id="visualizing-vtk-files" tabindex="-1">Visualizing VTK files</h3>
+<p>In the subfolder that was created by the simulation, you will find VTK files. Each file corresponds to an individual timestep in the simulation. Try to find in the code where we are generating these files and how often they are being printed.</p>
+<p>You can open these files in Paraview by doing:</p>
+<ol>
+<li>File -&gt; Open -&gt; [simulation_folder] -&gt; Mesh.vtk.series -&gt; OK -&gt; Click the "Apply" button</li>
+</ol>
+<p>You will see a window that should look something like this:</p>
+<p><img src="readme_images/paraview_1.png" alt="Paraview example"></p>
+<p>In the image above there are a few numbered points that you should notice. They are:</p>
+<ol>
+<li>
+<p><strong>Apply button</strong>: after opening the file, make sure to click "Apply" so Paraview processes and renders the file data.</p>
 </li>
-<li data-line="79" class="code-line" dir="auto">
-<p data-line="79" class="code-line" dir="auto"><strong>Main view</strong>: this is the main view window of your data. You can see the entire Basilisk domain and the colors representing the values of a scalar field.</p>
+<li>
+<p><strong>Main view</strong>: this is the main view window of your data. You can see the entire Basilisk domain and the colors representing the values of a scalar field.</p>
 </li>
-<li data-line="81" class="code-line" dir="auto">
-<p data-line="81" class="code-line" dir="auto"><strong>Timestepping bar</strong>: you can cycle through timesteps using the buttons on this bar.</p>
+<li>
+<p><strong>Timestepping bar</strong>: you can cycle through timesteps using the buttons on this bar.</p>
 </li>
-<li data-line="83" class="code-line" dir="auto">
-<p data-line="83" class="code-line" dir="auto"><strong>Field selection</strong>: the VTK contains the values of multiple scalar fields. You can change which field is being visualized by using this combo box.</p>
+<li>
+<p><strong>Field selection</strong>: the VTK contains the values of multiple scalar fields. You can change which field is being visualized by using this combo box.</p>
 </li>
-<li data-line="85" class="code-line" dir="auto">
-<p data-line="85" class="code-line" dir="auto"><strong>Representation type</strong>: you can change how paraview displays the domain using this box. The "surface with edges" option is often very useful, as it shows you the Basilisk mesh as well.</p>
+<li>
+<p><strong>Representation type</strong>: you can change how paraview displays the domain using this box. The "surface with edges" option is often very useful, as it shows you the Basilisk mesh as well.</p>
 </li>
 </ol>
-<p data-line="87" class="code-line" dir="auto">One should note that there are many different ways of visualizing Basilisk data, for example, the built-in <strong>bview</strong> tool from Basilisk. In the FluidLab, so far, we are used to visualizing through VTK files and Paraview/Python, but feel free to explore other ways as well that might suit you best.</p>
-<h3 data-line="89" class="code-line" dir="auto" id="post-processing-simulation-data" tabindex="-1">Post-processing simulation data</h3>
-<p data-line="91" class="code-line" dir="auto">You will notice that a log file was output in the simulation subfolders containing relevant data. We can use python scripts to process and plot this data as well.</p>
-<p data-line="93" class="code-line" dir="auto">An example script is also provided in this package. You can run it with the command:</p>
-<p data-line="95" class="code-line" dir="auto"><code> python startup_plots.py </code></p>
-<p data-line="97" class="code-line" dir="auto">This script will look for data in the Basilisk simulation folders and will plot the results. Make sure you run the corresponding basilisk simulations before this script, otherwise it will not find the needed data.</p>
-<p data-line="99" class="code-line" dir="auto">You might need to install some python packages when you run this script for the first time. Also, make sure you adjust the first few lines of the script to match the parameters that you used in your simulations.</p>
-<p data-line="101" class="code-line" dir="auto">If you run the script, for example, for Bi = 3 and Wi = {0.05, 0.1, 0.5, 1}, you should get something like this:</p>
-<p data-line="103" class="code-line" dir="auto"><img src="readme_images/startup_Bi3.png" alt="Startup flow" data-src="readme_images/startup_Bi3.png"></p>
-<p data-line="105" class="code-line" dir="auto">To understand what is being plotted, you might want to read <a href="https://www.sciencedirect.com/science/article/pii/S0377025707000869" data-href="https://www.sciencedirect.com/science/article/pii/S0377025707000869">Saramito's 2007 paper</a> (specifically the section on simple shear flow).</p>
-<h2 data-line="108" class="code-line" dir="auto" id="example-2-droplet-spreading-saramito-fluid" tabindex="-1">Example 2: Droplet spreading (Saramito fluid)</h2>
-<p data-line="110" class="code-line" dir="auto">This example simulates the spreading of an elastoviscoplastic droplet due to surface tension effects.</p>
-<h3 data-line="112" class="code-line" dir="auto" id="running-the-simulation" tabindex="-1">Running the simulation</h3>
-<p data-line="114" class="code-line" dir="auto">To compile the example, run:</p>
-<p data-line="116" class="code-line" dir="auto"><code> qcc spreading.c -O2 -Wall -lm -o spreading </code></p>
-<p data-line="118" class="code-line" dir="auto">Now you can run the simulation through the command:</p>
-<p data-line="120" class="code-line" dir="auto"><code> ./spreading 0 0.1 0 1 0.111111 100 1.00E-06 0.001 0.0005 0.0175 10  </code></p>
-<p data-line="122" class="code-line" dir="auto">We are passing a lot of command line arguments. Try to see what they are by looking at the code. If you really want to understand the meaning of these parameters, you might want to read <a href="https://arxiv.org/abs/2306.06640" data-href="https://arxiv.org/abs/2306.06640">Mazi's paper on EVP droplet spreading</a>.</p>
-<p data-line="125" class="code-line" dir="auto">Note that this simulation takes a very long time to finish completely. Make sure you cancel the process after a while.</p>
-<h3 data-line="127" class="code-line" dir="auto" id="visualizing-the-vtk-files" tabindex="-1">Visualizing the VTK files</h3>
-<p data-line="129" class="code-line" dir="auto">This example contains an interfacial boundary between two fluids (droplet and air). As such, two types of VTK files will be output in the folder:</p>
-<ol data-line="131" class="code-line" dir="auto">
-<li data-line="131" class="code-line" dir="auto">Mesh files: containing all the scalar field data in the mesh (same as in example 1)</li>
-<li data-line="132" class="code-line" dir="auto">Interface files: contains an outline that indicates the location of the interface between the two fluids</li>
-</ol>
-<p data-line="134" class="code-line" dir="auto">Open these files in Paraview by doing:</p>
-<ol data-line="136" class="code-line" dir="auto">
-<li data-line="136" class="code-line" dir="auto">
-<p data-line="136" class="code-line" dir="auto">File -&gt; Open -&gt; [simulation_folder] -&gt; Mesh-N..vtk -&gt; OK -&gt; Click the "Apply" button</p>
+<p>One should note that there are many different ways of visualizing Basilisk data, for example, the built-in <strong>bview</strong> tool from Basilisk. In the FluidLab, so far, we are used to visualizing through VTK files and Paraview/Python, but feel free to explore other ways as well that might suit you best.</p>
+<h3 id="post-processing-simulation-data" tabindex="-1">Post-processing simulation data</h3>
+<p>You will notice that a log file was output in the simulation subfolders containing relevant data. We can use python scripts to process and plot this data as well.</p>
+<p>An example script is also provided in this package. You can run it with the command:</p>
+<p><code> python startup_plots.py </code></p>
+<p>This script will look for data in the Basilisk simulation folders and will plot the results. Make sure you run the corresponding basilisk simulations before this script, otherwise it will not find the needed data.</p>
+<p>You might need to install some python packages when you run this script for the first time. Also, make sure you adjust the first few lines of the script to match the parameters that you used in your simulations.</p>
+<p>If you run the script, for example, for Bi = 3 and Wi = {0.05, 0.1, 0.5, 1}, you should get something like this:</p>
+<p><img src="readme_images/startup_Bi3.png" alt="Startup flow"></p>
+<p>To understand what is being plotted, you might want to read <a href="https://www.sciencedirect.com/science/article/pii/S0377025707000869">Saramito's 2007 paper</a> (specifically the section on simple shear flow).</p>
+<h2 id="example-2-droplet-spreading-saramito-fluid" tabindex="-1">Example 2: Droplet spreading (Saramito fluid)</h2>
+<p>This example simulates the spreading of an elastoviscoplastic droplet due to surface tension effects.</p>
+<h3 id="running-the-simulation" tabindex="-1">Running the simulation</h3>
+<p>To compile the example, run:</p>
+<p><code> qcc spreading.c -O2 -lm -o spreading </code></p>
+<p>Now you can run the simulation through the command:</p>
+<p><code> ./spreading 0 0.1 0 1 0.111111 100 1.00E-06 0.001 0.0005 0.0175 10  </code></p>
+<p>We are passing a lot of command line arguments. Try to see what they are by looking at the code. If you really want to understand the meaning of these parameters, you might want to read <a href="https://arxiv.org/abs/2306.06640">our paper on EVP droplet spreading</a>.</p>
+<p>Note that this simulation takes a very long time to finish completely. Make sure you cancel the process after a while.</p>
+<h3 id="visualizing-the-vtk-files" tabindex="-1">Visualizing the VTK files</h3>
+<p>This example contains an interfacial boundary between two fluids (droplet and ambient). As such, two types of VTK files will be created in the putputs folder:</p>
+<ol>
+<li>
+<p>Mesh files: containing all the scalar field data in the computational mesh.</p>
 </li>
-<li data-line="138" class="code-line" dir="auto">
-<p data-line="138" class="code-line" dir="auto">File -&gt; Open -&gt; [simulation_folder] -&gt; Interface-N..vtk -&gt; OK -&gt; Click the "Apply" button</p>
+<li>
+<p>Interface files: contains an outline that indicates the location of the interface between the droplet and the surrounding fluid (it is not a vacuum!)</p>
 </li>
 </ol>
-<p data-line="140" class="code-line" dir="auto">After tweaking some settings, you should see something looking like this:
-<img src="readme_images/paraview_2.png" alt="Paraview example" data-src="readme_images/paraview_2.png"></p>
-<p data-line="143" class="code-line" dir="auto">In the image above there are a few numbered points that you should notice. They are:</p>
-<ol data-line="145" class="code-line" dir="auto">
-<li data-line="145" class="code-line" dir="auto">
-<p data-line="145" class="code-line" dir="auto"><strong>Pipeline browser</strong>: this shows all the active files you have open. Before you change any settings, make sure you always select which file you actually want to change the settings of.</p>
+<p>Open these files in Paraview by doing:</p>
+<ol>
+<li>
+<p>File -&gt; Open -&gt; [simulation_folder] -&gt; Mesh.vtk.series -&gt; OK -&gt; Click the "Apply" button</p>
 </li>
-<li data-line="147" class="code-line" dir="auto">
-<p data-line="147" class="code-line" dir="auto"><strong>Line width</strong>: for the "Interface" files, you might want to use the "Surface" representation and increase the line width, so you can see the interface more clearly.</p>
-</li>
-<li data-line="149" class="code-line" dir="auto">
-<p data-line="149" class="code-line" dir="auto"><strong>Rotation</strong>: for axisymetric simulations, it is often convenient to do a 90 degress rotation in the visualization.</p>
+<li>
+<p>File -&gt; Open -&gt; [simulation_folder] -&gt; Interface.vtk.series -&gt; OK -&gt; Click the "Apply" button</p>
 </li>
 </ol>
-<p data-line="151" class="code-line" dir="auto">Make sure you also explore all the Paraview Mesh options mentioned in the first example. In particular: visualizing different scalar fields, visualizing the mesh cells and timestepping over the VTK files. Remember to select the "Mesh" in the Pipeline browser before changing these options!</p>
+<p>After tweaking some settings, you should see something looking like this:</p>
+<p><img src="readme_images/paraview_2.png" alt="Paraview example"></p>
+<p>In the image above there are a few numbered points that you should notice. They are:</p>
+<ol>
+<li>
+<p><strong>Pipeline browser</strong>: this shows all the active files you have open. Before you change any settings, make sure you always select which file you actually want to change the settings of.</p>
+</li>
+<li>
+<p><strong>Line width</strong>: for the "Interface" files, you might want to use the "Surface" representation and increase the line width, so you can see the interface more clearly.</p>
+</li>
+<li>
+<p><strong>Rotation</strong>: for axisymetric simulations, it is often convenient to do a 90 degress rotation in the visualization.</p>
+</li>
+</ol>
+<p>Make sure you also explore all the Paraview Mesh options mentioned in the first example. In particular: visualizing different scalar fields, visualizing the mesh cells and timestepping over the VTK files. Remember to select the "Mesh" in the Pipeline browser before changing these options!</p>
+<h2 id="example-3-oscillation-of-a-droplet-with-odd-viscosity" tabindex="-1">Example 3: Oscillation of a droplet with odd-viscosity</h2>
+<p>This example simulates the surface-tension driven oscillations of a droplet with odd viscosity.</p>
+<h3 id="running-the-simulation-1" tabindex="-1">Running the simulation</h3>
+<p>To compile the example, run:</p>
+<p><code> qcc odd_droplet_oscillations.c -O2 -Wall -lm -o odd_droplet_oscillations </code></p>
+<p>Now you can run the simulation through the command:</p>
+<p><code> ./odd_droplet_oscillations 0.01 0.1 9 0.0001  </code></p>
+<p>Again, we are passing a lot of command line arguments. Try to see what they are by looking at the code. The variables "Oh" within the code refer to the Ohnesorge number of the system.</p>
+<p>Note that this simulation takes a very long time to finish completely. Make sure you cancel the process after a while.</p>
+<h3 id="visualizing-the-output-using-python" tabindex="-1">Visualizing the output using python</h3>
+<p>We can also visualize interfacial an scalar field data using Python. An example script is also provided in this package within the "post_proc" folder. You can run it with the command:</p>
+<p><code> python make_video.py </code></p>
+<p>You might need to install some python packages when you run this script for the first time. Also, make sure you adjust the first few lines of the script to match the folder path where your simulation data is.</p>
+<p>If you run the script, it will generate a video similar to the one below.</p>
+<p><img src="readme_images/gif_droplet_oscillation.gif" alt="Video: Oscillation of a droplet with odd viscosity"></p>
+<h1 id="using-the-supercomputer-snellius" tabindex="-1">Using the supercomputer Snellius</h1>
+<p>In this section, we explain how to obtain access and submit simulations to the supercomputer, Snellius.</p>
+<h2 id="obtaining-access" tabindex="-1">Obtaining access</h2>
+<ol>
+<li>Go to this link: <a href="https://www.surf.nl/en/access-to-compute-services">https://www.surf.nl/en/access-to-compute-services</a></li>
+<li>Click on "Straight to the request portal"</li>
+<li>Click on the "SURFconext" option and login with your UvA credentials. You can also use other university of research institute crediantials.</li>
+<li>If you're an UvA student or worker click on the option "Apply for access: Direct institute contract". Note: you're NOT connected to the UvA, you will need to use the option "Apply for access: Small compute applications (NWO)", but this option is not available for bachelor/master students.</li>
+<li>For the UvA access you will need to fill out a very short form with the following info
+<ol>
+<li>Your organization (choose UvA)</li>
+<li>Is the request for GSI? (Choose No, unless it is...)</li>
+<li>Project title</li>
+<li>A short project description</li>
+<li>Type of request: usually you want just "Snellius CPU". Unless you're going to use a code that runs on GPU.</li>
+<li>SBU CPU Snellius: for the general student, requesting 150.000 SBUs is enough.  If you request significantly more than that, they might ask you later to give a short justification (which is also fine).</li>
+<li>Your first name, last name, and UvA email.</li>
+<li>Add another login? Choose No.</li>
+</ol>
+</li>
+<li>Wait for them to reply to you with a Snellius login and password. Will probably take one or two working days.</li>
+</ol>
+<h2 id="logging-into-snellius" tabindex="-1">Logging into Snellius</h2>
+<p>If you're using Windows, I highly reccomend accessing Snellius through a command called Bitvise. It can be downloaded here: <a href="https://bitvise.com/">https://bitvise.com/</a></p>
+<ol>
+<li>Open Bitvise. Provide the Snellius server address and your login information. Fill out this information in the same way as in the image below, but with your own credentials</li>
+<li>Click "Log in"</li>
+<li>Optional: you can use the top-left button "Save profile" to save this setup into a file. This will automatically load this profile next time you open bitvise.</li>
+</ol>
+<p><img src="readme_images/snellius_access/bitvise_login.png" alt="Bitvise screenshot"></p>
+<h2 id="transferring-files-to-and-from-snellius" tabindex="-1">Transferring files to and from Snellius</h2>
+<p>To transfer files between your computer and Snellius, do the following:</p>
+<ol>
+<li>In the left part of the Bitvise window, click on "New SFTP window", which will open a new interface</li>
+<li>This new interface has two panels: the left panel shows folders within your own computer, you can navigate through your local folders there. The right panel shows remote folder within your user area in Snellius.</li>
+<li>To send files from your computer to Snellius:
+<ul>
+<li>On the left panel, select the local file(s) you want to transfer</li>
+<li>On the right panel, navigate into the folder where you want to upload the file(s). You can also right-click in the right panel to create new folders.</li>
+<li>Below the left panel, click "Upload"</li>
+</ul>
+</li>
+<li>To send files from Snellius to your computer
+<ol>
+<li>Same as the item above, but from the right panel towards the left panel. And click "Download" after selecting the files.</li>
+</ol>
+</li>
+</ol>
+<h2 id="using-the-command-terminal-within-snellius" tabindex="-1">Using the command terminal within Snellius</h2>
+<p>To execute commands within the Snellius server, do the following:</p>
+<ol>
+<li>In the main Bitvise window, click on "New terminal console" on the left panel.</li>
+<li>The new console that is now open is a terminal window within snellius. So every command you run here will not run on your machine, it will run in the Snellius server.</li>
+<li>This console is a usual linux command terminal, so all usual linux commands will work here, such as: cd, ls, cp, rm, pwd, mkdir, and others. If you never used linux command line before, this is a good time to spend a few minutes reading on some of these basic commands.</li>
+<li>There are also some commands available that are specific to Snellius. See the section "Useful Snellius commands" later in this tutorial</li>
+</ol>
+<p>IMPORTANT: in Snellius you should never run a simulation directly on the command terminal, like you would do in your computer. Snellius has a system called "SLURM", which manages submitted simulations into a queue, so that everyone gets to run their stuff if the system is crowded. You should only use the command terminal to run short scripts that take less than 5 minutes or so. If a command will take more than 5 minutes to run, then you should submit it as a job (see the section below).</p>
+<h2 id="installing-basilisk" tabindex="-1">Installing Basilisk</h2>
+<p>If you're going to run Basilisk simulations, you need to install Basilisk within your Snellius area. Do the following:</p>
+<ol>
+<li>Open a Snellius command terminal</li>
+<li>Within this terminal, follow the Basilisk installation instructions that were given at the beginning of this tutorial. Note that this command terminal is already running linux, so you don't need to install the virtual subsystem. Just follow directly the linux instructions.</li>
+</ol>
+<h2 id="running-simulations" tabindex="-1">Running simulations</h2>
+<p>To run a simulation on Snellius you need to "submit a job" to the server. I will teach here two ways of doing it: (1) for simulations that are usual single-process programs and (2) for simulations that are multi-process programs (MPI).</p>
+<h3 id="submitting-one-or-many-single-process-simulations" tabindex="-1">Submitting one (or many) single-process simulations</h3>
+<p>If your Basilisk (or any other code) program runs as a single process, you will need to submit it with a batch script like the one in the image below. You can get the batch script file in this link: <a href="readme_images/snellius_access/script_single.batch">[LINK]</a>.</p>
+<p>In this batch script, we submit multiple simulations that will run at the same time. Each simulation uses only one single process. Make sure to read all the comments in the batch script to understand what everything means.</p>
+<p><img src="readme_images/snellius_access/batch_script_serial.png" alt="Batch script serial"></p>
+<h3 id="submitting-one-multi-process-simulations" tabindex="-1">Submitting one multi-process simulations</h3>
+<p>Basilisk and some other codes allow you to parallelize your calculations using a library called MPI. This means a single simulation will use multiple processes at the same time to calculate things faster. To submit a simulation like this you need a batch script like the one in the image below. You can get the batch script file in this link: <a href="readme_images/snellius_access/script_mpi.batch">[LINK]</a>.</p>
+<p><img src="readme_images/snellius_access/batch_script_mpi.png" alt="Batch script MPI"></p>
+<h2 id="useful-snellius-commands" tabindex="-1">Useful Snellius commands</h2>
+<p>In the Snellius command terminal, there are some useful commands you can use to check your simulations and other things.</p>
+<h3 id="checking-simulations-currently-running-squeue" tabindex="-1"><ins>Checking simulations currently running: squeue</ins></h3>
+<p>To see which jobs you currently have running you can use the command: <code>squeue</code></p>
+<p>Sometimes your jobs have names that are really long and don't appear fully in the command above. In that case you can use this slightly more elaborate command: <code>squeue --format="%i %.10M %.30j %.10T"</code></p>
+<h3 id="cancelling-a-job-that-is-running-scancel" tabindex="-1"><ins>Cancelling a job that is running: scancel</ins></h3>
+<p>To cancel a job that is running, do the following:</p>
+<ol>
+<li>Run the <code>squeue</code> command and find the number (JOBID) identifying this job.</li>
+<li>Cancel the job with the command: <code>scancel XXXXXXXX</code></li>
+</ol>
+<p>You can check that it was succesfully cancelled by running <code>squeue</code> again.</p>
+<h3 id="checking-how-much-disk-space-you-still-have-available-myquota" tabindex="-1"><ins>Checking how much disk space you still have available: myquota</ins></h3>
+<p>Use the following command: <code>myquota</code></p>
+<p>The first line of the "home" output will show you the percentage of the total 200GB that you have already used.</p>
+<p>The second line (Inodes) will show you how many individual files you have saved (in percentage). There is also a maximum value for this, but it's usually not an issue.</p>
+<h3 id="checking-how-many-sbus-you-still-have-available-accinfo" tabindex="-1"><ins>Checking how many SBUs you still have available: accinfo</ins></h3>
+<p>Remember that you have a limit in how many hours you can run, this is given by the amount of SBUs you requested when you created your account.</p>
+<p>To check how many SBUs you already used up, use the command: <code>accinfo</code></p>
 
-        <script>var qe=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports);var He=qe((It,Ie)=>{var ke="Expected a function",Oe=NaN,ot="[object Symbol]",st=/^\s+|\s+$/g,lt=/^[-+]0x[0-9a-f]+$/i,ct=/^0b[01]+$/i,dt=/^0o[0-7]+$/i,ut=parseInt,ft=typeof global=="object"&&global&&global.Object===Object&&global,mt=typeof self=="object"&&self&&self.Object===Object&&self,gt=ft||mt||Function("return this")(),pt=Object.prototype,vt=pt.toString,ht=Math.max,bt=Math.min,pe=function(){return gt.Date.now()};function yt(e,t,n){var r,i,a,s,o,d,m=0,y=!1,T=!1,S=!0;if(typeof e!="function")throw new TypeError(ke);t=De(t)||0,ne(n)&&(y=!!n.leading,T="maxWait"in n,a=T?ht(De(n.maxWait)||0,t):a,S="trailing"in n?!!n.trailing:S);function M(g){var w=r,k=i;return r=i=void 0,m=g,s=e.apply(k,w),s}function re(g){return m=g,o=setTimeout(E,t),y?M(g):s}function X(g){var w=g-d,k=g-m,I=t-w;return T?bt(I,a-k):I}function R(g){var w=g-d,k=g-m;return d===void 0||w>=t||w<0||T&&k>=a}function E(){var g=pe();if(R(g))return D(g);o=setTimeout(E,X(g))}function D(g){return o=void 0,S&&r?M(g):(r=i=void 0,s)}function B(){o!==void 0&&clearTimeout(o),m=0,r=d=i=o=void 0}function Y(){return o===void 0?s:D(pe())}function N(){var g=pe(),w=R(g);if(r=arguments,i=this,d=g,w){if(o===void 0)return re(d);if(T)return o=setTimeout(E,t),M(d)}return o===void 0&&(o=setTimeout(E,t)),s}return N.cancel=B,N.flush=Y,N}function Tt(e,t,n){var r=!0,i=!0;if(typeof e!="function")throw new TypeError(ke);return ne(n)&&(r="leading"in n?!!n.leading:r,i="trailing"in n?!!n.trailing:i),yt(e,t,{leading:r,maxWait:t,trailing:i})}function ne(e){var t=typeof e;return!!e&&(t=="object"||t=="function")}function wt(e){return!!e&&typeof e=="object"}function Et(e){return typeof e=="symbol"||wt(e)&&vt.call(e)==ot}function De(e){if(typeof e=="number")return e;if(Et(e))return Oe;if(ne(e)){var t=typeof e.valueOf=="function"?e.valueOf():e;e=ne(t)?t+"":t}if(typeof e!="string")return e===0?e:+e;e=e.replace(st,"");var n=ct.test(e);return n||dt.test(e)?ut(e.slice(2),n?2:8):lt.test(e)?Oe:+e}Ie.exports=Tt});var we="code-line",U=class{constructor(t,n,r){this.element=t;this.line=n;this.codeElement=r;this._detailParentElements=Array.from(Xe(t,"DETAILS"))}get isVisible(){return!this._detailParentElements.some(t=>!t.open)}},se=(()=>{let e,t=-1;return n=>{if(!e||n!==t){t=n,e=[new U(document.body,-1)];for(let r of document.getElementsByClassName(we)){if(!(r instanceof HTMLElement))continue;let i=+r.getAttribute("data-line");isNaN(i)||(r.tagName==="CODE"&&r.parentElement&&r.parentElement.tagName==="PRE"?e.push(new U(r.parentElement,i,r)):r.tagName==="UL"||r.tagName==="OL"||e.push(new U(r,i)))}}return e}})();function le(e,t){let n=Math.floor(e),r=se(t),i=r[0]||null;for(let a of r){if(a.line===n)return{previous:a,next:void 0};if(a.line>n)return{previous:i,next:a};i=a}return{previous:i}}function ze(e,t){let n=se(t).filter(d=>d.isVisible),r=e-window.scrollY,i=-1,a=n.length-1;for(;i+1<a;){let d=Math.floor((i+a)/2),m=W(n[d]);m.top+m.height>=r?a=d:i=d}let s=n[a],o=W(s);return a>=1&&o.top>r?{previous:n[i],next:s}:a>1&&a<n.length&&o.top+o.height>r?{previous:s,next:n[a+1]}:{previous:s}}function W({element:e}){let t=e.getBoundingClientRect(),n=e.querySelector(`.${we}`);if(n){let r=n.getBoundingClientRect(),i=Math.max(1,r.top-t.top);return{top:t.top,height:i}}return t}function J(e,t,n){if(!n.settings?.scrollPreviewWithEditor)return;if(e<=0){window.scroll(window.scrollX,0);return}let{previous:r,next:i}=le(e,t);if(!r)return;let a=0,s=W(r),o=s.top;if(i&&i.line!==r.line){let d=(e-r.line)/(i.line-r.line),m=o+s.height,y=i.element.getBoundingClientRect().top-m;a=m+d*y}else{let d=e-Math.floor(e);a=o+s.height*d}a=Math.abs(a)<1?Math.sign(a):a,window.scroll(window.scrollX,Math.max(1,window.scrollY+a))}function ce(e,t){let{previous:n,next:r}=ze(e,t);if(n){if(n.line<0)return 0;let i=W(n),a=e-window.scrollY-i.top;if(r){let s=a/(W(r).top-i.top);return n.line+s*(r.line-n.line)}else{let s=a/i.height;return n.line+s}}return null}function Ee(e,t){return se(t).find(n=>n.element.id===e)}function*Xe(e,t){for(let n=e.parentElement;n;n=n.parentElement)n.tagName===t&&(yield n)}var Q=class{onDidChangeTextEditorSelection(t,n){let{previous:r}=le(t,n);this._update(r&&(r.codeElement||r.element))}_update(t){this._unmarkActiveElement(this._current),this._markActiveElement(t),this._current=t}_unmarkActiveElement(t){t&&t.classList.toggle("code-active-line",!1)}_markActiveElement(t){t&&t.classList.toggle("code-active-line",!0)}};function Se(e){document.readyState==="loading"||document.readyState==="uninitialized"?document.addEventListener("DOMContentLoaded",e):e()}var Ae=(e,t)=>({postMessage(n,r){e.postMessage({type:n,source:t.settings.source,...r})}});function de(e){let t=document.getElementById("vscode-markdown-preview-data");if(t){let n=t.getAttribute(e);if(n)return n}throw new Error(`Could not load data for ${e}`)}function ue(e){return JSON.parse(de(e))}var Z=class{constructor(){this._settings=ue("data-settings")}get settings(){return this._settings}updateSettings(t){this._settings=t}};var Le=11;function Ye(e,t){var n=t.attributes,r,i,a,s,o;if(!(t.nodeType===Le||e.nodeType===Le)){for(var d=n.length-1;d>=0;d--)r=n[d],i=r.name,a=r.namespaceURI,s=r.value,a?(i=r.localName||i,o=e.getAttributeNS(a,i),o!==s&&(r.prefix==="xmlns"&&(i=r.name),e.setAttributeNS(a,i,s))):(o=e.getAttribute(i),o!==s&&e.setAttribute(i,s));for(var m=e.attributes,y=m.length-1;y>=0;y--)r=m[y],i=r.name,a=r.namespaceURI,a?(i=r.localName||i,t.hasAttributeNS(a,i)||e.removeAttributeNS(a,i)):t.hasAttribute(i)||e.removeAttribute(i)}}var ee,Ge="http://www.w3.org/1999/xhtml",b=typeof document>"u"?void 0:document,$e=!!b&&"content"in b.createElement("template"),Ke=!!b&&b.createRange&&"createContextualFragment"in b.createRange();function Je(e){var t=b.createElement("template");return t.innerHTML=e,t.content.childNodes[0]}function Qe(e){ee||(ee=b.createRange(),ee.selectNode(b.body));var t=ee.createContextualFragment(e);return t.childNodes[0]}function Ze(e){var t=b.createElement("body");return t.innerHTML=e,t.childNodes[0]}function et(e){return e=e.trim(),$e?Je(e):Ke?Qe(e):Ze(e)}function te(e,t){var n=e.nodeName,r=t.nodeName,i,a;return n===r?!0:(i=n.charCodeAt(0),a=r.charCodeAt(0),i<=90&&a>=97?n===r.toUpperCase():a<=90&&i>=97?r===n.toUpperCase():!1)}function tt(e,t){return!t||t===Ge?b.createElement(e):b.createElementNS(t,e)}function nt(e,t){for(var n=e.firstChild;n;){var r=n.nextSibling;t.appendChild(n),n=r}return t}function fe(e,t,n){e[n]!==t[n]&&(e[n]=t[n],e[n]?e.setAttribute(n,""):e.removeAttribute(n))}var xe={OPTION:function(e,t){var n=e.parentNode;if(n){var r=n.nodeName.toUpperCase();r==="OPTGROUP"&&(n=n.parentNode,r=n&&n.nodeName.toUpperCase()),r==="SELECT"&&!n.hasAttribute("multiple")&&(e.hasAttribute("selected")&&!t.selected&&(e.setAttribute("selected","selected"),e.removeAttribute("selected")),n.selectedIndex=-1)}fe(e,t,"selected")},INPUT:function(e,t){fe(e,t,"checked"),fe(e,t,"disabled"),e.value!==t.value&&(e.value=t.value),t.hasAttribute("value")||e.removeAttribute("value")},TEXTAREA:function(e,t){var n=t.value;e.value!==n&&(e.value=n);var r=e.firstChild;if(r){var i=r.nodeValue;if(i==n||!n&&i==e.placeholder)return;r.nodeValue=n}},SELECT:function(e,t){if(!t.hasAttribute("multiple")){for(var n=-1,r=0,i=e.firstChild,a,s;i;)if(s=i.nodeName&&i.nodeName.toUpperCase(),s==="OPTGROUP")a=i,i=a.firstChild;else{if(s==="OPTION"){if(i.hasAttribute("selected")){n=r;break}r++}i=i.nextSibling,!i&&a&&(i=a.nextSibling,a=null)}e.selectedIndex=n}}},V=1,Me=11,Ne=3,Ce=8;function O(){}function rt(e){if(e)return e.getAttribute&&e.getAttribute("id")||e.id}function it(e){return function(n,r,i){if(i||(i={}),typeof r=="string")if(n.nodeName==="#document"||n.nodeName==="HTML"||n.nodeName==="BODY"){var a=r;r=b.createElement("html"),r.innerHTML=a}else r=et(r);else r.nodeType===Me&&(r=r.firstElementChild);var s=i.getNodeKey||rt,o=i.onBeforeNodeAdded||O,d=i.onNodeAdded||O,m=i.onBeforeElUpdated||O,y=i.onElUpdated||O,T=i.onBeforeNodeDiscarded||O,S=i.onNodeDiscarded||O,M=i.onBeforeElChildrenUpdated||O,re=i.skipFromChildren||O,X=i.addChild||function(l,c){return l.appendChild(c)},R=i.childrenOnly===!0,E=Object.create(null),D=[];function B(l){D.push(l)}function Y(l,c){if(l.nodeType===V)for(var p=l.firstChild;p;){var u=void 0;c&&(u=s(p))?B(u):(S(p),p.firstChild&&Y(p,c)),p=p.nextSibling}}function N(l,c,p){T(l)!==!1&&(c&&c.removeChild(l),S(l),Y(l,p))}function g(l){if(l.nodeType===V||l.nodeType===Me)for(var c=l.firstChild;c;){var p=s(c);p&&(E[p]=c),g(c),c=c.nextSibling}}g(n);function w(l){d(l);for(var c=l.firstChild;c;){var p=c.nextSibling,u=s(c);if(u){var f=E[u];f&&te(c,f)?(c.parentNode.replaceChild(f,c),I(f,c)):w(c)}else w(c);c=p}}function k(l,c,p){for(;c;){var u=c.nextSibling;(p=s(c))?B(p):N(c,l,!0),c=u}}function I(l,c,p){var u=s(c);if(u&&delete E[u],!p){var f=m(l,c);if(f===!1||(f instanceof HTMLElement&&(l=f,g(l)),e(l,c),y(l),M(l,c)===!1))return}l.nodeName!=="TEXTAREA"?Ve(l,c):xe.TEXTAREA(l,c)}function Ve(l,c){var p=re(l,c),u=c.firstChild,f=l.firstChild,F,A,_,$,C;e:for(;u;){for($=u.nextSibling,F=s(u);!p&&f;){if(_=f.nextSibling,u.isSameNode&&u.isSameNode(f)){u=$,f=_;continue e}A=s(f);var K=f.nodeType,P=void 0;if(K===u.nodeType&&(K===V?(F?F!==A&&((C=E[F])?_===C?P=!1:(l.insertBefore(C,f),A?B(A):N(f,l,!0),f=C,A=s(f)):P=!1):A&&(P=!1),P=P!==!1&&te(f,u),P&&I(f,u)):(K===Ne||K==Ce)&&(P=!0,f.nodeValue!==u.nodeValue&&(f.nodeValue=u.nodeValue))),P){u=$,f=_;continue e}A?B(A):N(f,l,!0),f=_}if(F&&(C=E[F])&&te(C,u))p||X(l,C),I(C,u);else{var oe=o(u);oe!==!1&&(oe&&(u=oe),u.actualize&&(u=u.actualize(l.ownerDocument||b)),X(l,u),w(u))}u=$,f=_}k(l,f,A);var Te=xe[l.nodeName];Te&&Te(l,c)}var v=n,G=v.nodeType,ye=r.nodeType;if(!R){if(G===V)ye===V?te(n,r)||(S(n),v=nt(n,tt(r.nodeName,r.namespaceURI))):v=r;else if(G===Ne||G===Ce){if(ye===G)return v.nodeValue!==r.nodeValue&&(v.nodeValue=r.nodeValue),v;v=r}}if(v===r)S(n);else{if(r.isSameNode&&r.isSameNode(v))return;if(I(v,r,R),D)for(var ie=0,je=D.length;ie<je;ie++){var ae=E[D[ie]];ae&&N(ae,ae.parentNode,!1)}}return!R&&v!==n&&n.parentNode&&(v.actualize&&(v=v.actualize(n.ownerDocument||b)),n.parentNode.replaceChild(v,n)),v}}var at=it(Ye),Pe=at;var me=Object.freeze({http:"http",https:"https",file:"file",untitled:"untitled",mailto:"mailto",vscode:"vscode","vscode-insiders":"vscode-insiders",notebookCell:"vscode-notebook-cell"});function ge(e,t){return t.toLowerCase().startsWith(e+":")}var Re=He(),H=0,Be=new Q,h=new Z,L=0,j=h.settings.source,q=acquireVsCodeApi(),ve=q.getState()??{},x={...ve,...ue("data-state")};typeof ve.scrollProgress<"u"&&ve?.resource!==x.resource&&(x.scrollProgress=0);q.setState(x);var z=Ae(q,h);window.cspAlerter.setPoster(z);window.styleLoadingMonitor.setPoster(z);function he(e){let t=document.getElementsByTagName("img");if(t.length>0){let n=Array.from(t,r=>r.complete?Promise.resolve():new Promise(i=>{r.addEventListener("load",()=>i()),r.addEventListener("error",()=>i())}));Promise.all(n).then(()=>setTimeout(e,0))}else setTimeout(e,0)}Se(()=>{let n=[...new DOMParser().parseFromString(de("data-initial-md-content"),"text/html").body.children];document.body.append(...n);for(let i of n)i instanceof HTMLElement&&be(i);let r=x.scrollProgress;if(Fe(),typeof r=="number"&&!h.settings.fragment){he(()=>{H+=1;let i=Math.max(1,r*document.body.clientHeight);window.scrollTo(0,i)});return}h.settings.scrollPreviewWithEditor&&he(()=>{if(h.settings.fragment){let i;try{i=encodeURIComponent(h.settings.fragment)}catch{i=h.settings.fragment}x.fragment=void 0,q.setState(x);let a=Ee(i,L);a&&(H+=1,J(a.line,L,h))}else isNaN(h.settings.line)||(H+=1,J(h.settings.line,L,h))}),typeof h.settings.selectedLine=="number"&&Be.onDidChangeTextEditorSelection(h.settings.selectedLine,L)});var St=(()=>{let e=Re(t=>{H+=1,he(()=>J(t,L,h))},50);return t=>{isNaN(t)||(x.line=t,e(t))}})();window.addEventListener("resize",()=>{H+=1,Ue()},!0);function Fe(){let e=document.getElementsByTagName("img"),t=0;for(let n of e){n.id="image-"+t,t+=1;let r=n.getAttribute("data-src"),a=r&&!(ge(me.http,r)||ge(me.https,r))?"localImage":"image";n.setAttribute("data-vscode-context",JSON.stringify({webviewSection:a,id:n.id,preventDefaultContextMenuItems:!0,resource:j,imageSource:r}))}}async function _e(e,t=5){if(!document.hasFocus()&&t>0){setTimeout(()=>{_e(e,t-1)},20);return}try{await navigator.clipboard.write([new ClipboardItem({"image/png":new Promise(n=>{let r=document.createElement("canvas");r!==null&&(r.width=e.naturalWidth,r.height=e.naturalHeight,r.getContext("2d")?.drawImage(e,0,0)),r.toBlob(i=>{i&&n(i),r.remove()},"image/png")})})])}catch(n){console.error(n);let r=window.getSelection();if(!r){await navigator.clipboard.writeText(e.getAttribute("data-src")??e.src);return}r.removeAllRanges();let i=document.createRange();i.selectNode(e),r.addRange(i),document.execCommand("copy"),r.removeAllRanges()}}window.addEventListener("message",async e=>{let t=e.data;switch(t.type){case"copyImage":{let n=document.getElementById(t.id);n instanceof HTMLImageElement&&_e(n);return}case"onDidChangeTextEditorSelection":t.source===j&&Be.onDidChangeTextEditorSelection(t.line,L);return;case"updateView":t.source===j&&St(t.line);return;case"updateContent":{let n=document.querySelector(".markdown-body"),i=new DOMParser().parseFromString(t.content,"text/html");for(let a of Array.from(i.querySelectorAll("meta")))a.hasAttribute("http-equiv")&&a.remove();if(t.source!==j){j=t.source;let a=i.querySelector(".markdown-body");n.replaceWith(a),be(a)}else{let a=i.querySelector(".markdown-body"),s=a.querySelectorAll("link");for(let o of s)o.remove();a.prepend(...s),Pe(n,a,{childrenOnly:!0,onBeforeElUpdated:(o,d)=>{if(We(o,d)){let m=o.querySelectorAll("[data-line]"),y=d.querySelectorAll("[data-line]");m.length!==y.length&&console.log("unexpected line number change");for(let T=0;T<m.length;++T){let S=m[T],M=y[T];M&&S.setAttribute("data-line",M.getAttribute("data-line"))}return!1}return o.tagName==="DETAILS"&&d.tagName==="DETAILS"&&o.hasAttribute("open")&&d.setAttribute("open",""),!0},addChild:(o,d)=>{o.appendChild(d),d instanceof HTMLElement&&be(d)}})}++L,window.dispatchEvent(new CustomEvent("vscode.markdown.updateContent")),Fe();break}}},!1);document.addEventListener("dblclick",e=>{if(!h.settings.doubleClickToSwitchToEditor)return;for(let r=e.target;r;r=r.parentNode)if(r.tagName==="A")return;let t=e.pageY,n=ce(t,L);typeof n=="number"&&!isNaN(n)&&z.postMessage("didClick",{line:Math.floor(n)})});var At=["http:","https:","mailto:","vscode:","vscode-insiders:"];document.addEventListener("click",e=>{if(!e)return;let t=e.target;for(;t;){if(t.tagName&&t.tagName==="A"&&t.href){if(t.getAttribute("href").startsWith("#"))return;let n=t.getAttribute("data-href");if(!n&&(n=t.getAttribute("href"),At.some(r=>n.startsWith(r))))return;if(!/^[a-z\-]+:/i.test(n)){z.postMessage("openLink",{href:n}),e.preventDefault(),e.stopPropagation();return}return}t=t.parentNode}},!0);window.addEventListener("scroll",Re(()=>{if(Ue(),H>0)H-=1;else{let e=ce(window.scrollY,L);typeof e=="number"&&!isNaN(e)&&z.postMessage("revealLine",{line:e})}},50));function Ue(){x.scrollProgress=window.scrollY/document.body.clientHeight,q.setState(x)}function We(e,t){let n=["open"];if(e.isEqualNode(t))return!0;if(e.tagName!==t.tagName||e.textContent!==t.textContent)return!1;let r=[...e.attributes].filter(o=>!n.includes(o.name)),i=[...t.attributes].filter(o=>!n.includes(o.name));if(r.length!==i.length)return!1;for(let o=0;o<r.length;++o){let d=r[o],m=i[o];if(d.name!==m.name||d.value!==m.value&&d.name!=="data-line")return!1}let a=Array.from(e.children),s=Array.from(t.children);return a.length===s.length&&a.every((o,d)=>We(o,s[d]))}function be(e){let t=["type","src","nonce","noModule","async"],n=e.tagName==="SCRIPT"?[e]:Array.from(e.getElementsByTagName("script"));for(let r of n){if(!(r instanceof HTMLElement))continue;let i=document.createElement("script"),a=r.innerText;i.text=a;for(let s of t){let o=r.getAttribute&&r.getAttribute(s);o&&i.setAttribute(s,o)}r.insertAdjacentElement("afterend",i),r.remove()}}
+        <script>var ze=(e,r)=>()=>(r||e((r={exports:{}}).exports,r),r.exports);var Re=ze((kt,ke)=>{var Ie="Expected a function",De=NaN,lt="[object Symbol]",ct=/^\s+|\s+$/g,dt=/^[-+]0x[0-9a-f]+$/i,ut=/^0b[01]+$/i,ft=/^0o[0-7]+$/i,mt=parseInt,gt=typeof global=="object"&&global&&global.Object===Object&&global,pt=typeof self=="object"&&self&&self.Object===Object&&self,ht=gt||pt||Function("return this")(),vt=Object.prototype,bt=vt.toString,wt=Math.max,Tt=Math.min,he=function(){return ht.Date.now()};function yt(e,r,n){var t,i,o,s,a,l,f=0,v=!1,h=!1,E=!0;if(typeof e!="function")throw new TypeError(Ie);r=He(r)||0,re(n)&&(v=!!n.leading,h="maxWait"in n,o=h?wt(He(n.maxWait)||0,r):o,E="trailing"in n?!!n.trailing:E);function x(g){var L=t,I=i;return t=i=void 0,f=g,s=e.apply(I,L),s}function ie(g){return f=g,a=setTimeout(S,r),v?x(g):s}function G(g){var L=g-l,I=g-f,k=r-L;return h?Tt(k,o-I):k}function F(g){var L=g-l,I=g-f;return l===void 0||L>=r||L<0||h&&I>=o}function S(){var g=he();if(F(g))return H(g);a=setTimeout(S,G(g))}function H(g){return a=void 0,E&&t?x(g):(t=i=void 0,s)}function W(){a!==void 0&&clearTimeout(a),f=0,t=l=i=a=void 0}function X(){return a===void 0?s:H(he())}function P(){var g=he(),L=F(g);if(t=arguments,i=this,l=g,L){if(a===void 0)return ie(l);if(h)return a=setTimeout(S,r),x(l)}return a===void 0&&(a=setTimeout(S,r)),s}return P.cancel=W,P.flush=X,P}function Et(e,r,n){var t=!0,i=!0;if(typeof e!="function")throw new TypeError(Ie);return re(n)&&(t="leading"in n?!!n.leading:t,i="trailing"in n?!!n.trailing:i),yt(e,r,{leading:t,maxWait:r,trailing:i})}function re(e){var r=typeof e;return!!e&&(r=="object"||r=="function")}function Lt(e){return!!e&&typeof e=="object"}function St(e){return typeof e=="symbol"||Lt(e)&&bt.call(e)==lt}function He(e){if(typeof e=="number")return e;if(St(e))return De;if(re(e)){var r=typeof e.valueOf=="function"?e.valueOf():e;e=re(r)?r+"":r}if(typeof e!="string")return e===0?e:+e;e=e.replace(ct,"");var n=ut.test(e);return n||ft.test(e)?mt(e.slice(2),n?2:8):dt.test(e)?De:+e}ke.exports=Et});var Ee="code-line",Y=class{constructor(r,n,t,i){this.element=r;this.line=n;this.codeElement=t;this.endLine=i;this.#e=Array.from(Xe(r,"DETAILS"))}#e;get isVisible(){if(this.#e.some(t=>!t.open))return!1;let r=window.getComputedStyle(this.element);if(r.display==="none"||r.visibility==="hidden")return!1;let n=this.element.getBoundingClientRect();return!(n.height===0||n.width===0)}},le=(()=>{let e,r=-1;return n=>{if(!e||n!==r){r=n,e=[new Y(document.body,-1)];for(let t of document.getElementsByClassName(Ee)){if(!(t instanceof HTMLElement))continue;let i=+t.getAttribute("data-line");if(!isNaN(i))if(t.tagName==="CODE"&&t.parentElement&&t.parentElement.tagName==="PRE"){let s=((t.textContent||"").match(/\n/g)||[]).length+1,a=i+s-1;e.push(new Y(t.parentElement,i,t,a))}else t.tagName==="PRE"||t.tagName==="UL"||t.tagName==="OL"||e.push(new Y(t,i))}}return e}})();function ce(e,r){let n=Math.floor(e),t=le(r),i=t[0]||null;for(let o of t){if(o.line===n)return{previous:o,next:void 0};if(o.line>n)return{previous:i,next:o};i=o}return{previous:i}}function Ge(e,r){let n=le(r).filter(l=>l.isVisible),t=e-window.scrollY,i=-1,o=n.length-1;for(;i+1<o;){let l=Math.floor((i+o)/2),f=R(n[l]);f.top+f.height>=t?o=l:i=l}let s=n[o],a=R(s);return o>=1&&a.top>t?{previous:n[i],next:s}:o>1&&o<n.length&&a.top+a.height>t?{previous:s,next:n[o+1]}:{previous:s}}function R(e){let{element:r,codeElement:n}=e,t=r.getBoundingClientRect();if(n)return t;let i=r.querySelector(`.${Ee}`);if(i){let o=i.getBoundingClientRect(),s=Math.max(1,o.top-t.top);return{top:t.top,height:s}}return t}function Le(e){let{element:r,codeElement:n}=e,t=R(e);if(n){let i=window.getComputedStyle(r),o=parseFloat(i.paddingTop)||0,s=parseFloat(i.paddingBottom)||0;return{top:t.top+o,height:t.height-o-s,paddingTop:o,paddingBottom:s}}return{top:t.top,height:t.height,paddingTop:0,paddingBottom:0}}function Q(e,r,n){if(!n.settings?.scrollPreviewWithEditor)return;if(e<=0){window.scroll(window.scrollX,0);return}let{previous:t,next:i}=ce(e,r);if(!t)return;let o=0,s=R(t),a=s.top;if(t.endLine&&t.endLine>t.line)if(e<t.endLine){let l=Le(t),f=(e-t.line)/(t.endLine-t.line);o=window.scrollY+l.top+l.height*f}else if(i&&i.line!==t.line){let l=(e-t.endLine)/(i.line-t.endLine),f=window.scrollY+a+s.height,h=window.scrollY+i.element.getBoundingClientRect().top-f;o=f+l*h}else o=window.scrollY+a+s.height;else if(i&&i.line!==t.line){let l=(e-t.line)/(i.line-t.line),f=window.scrollY+a+s.height,h=window.scrollY+i.element.getBoundingClientRect().top-f;o=f+l*h}else{let l=e-Math.floor(e);o=window.scrollY+a+s.height*l}window.scroll(window.scrollX,Math.max(1,o))}function de(e,r){let{previous:n,next:t}=Ge(e,r);if(n){if(n.line<0)return 0;let i=R(n),o=e-window.scrollY-i.top;if(n.endLine&&n.endLine>n.line){let s=Le(n),a=e-window.scrollY-s.top;if(a>=0&&a<=s.height){let l=a/s.height;return n.line+l*(n.endLine-n.line)}else if(t&&a>s.height){let l=a-s.height,f=R(t),v=s.top+s.height,h=f.top-v,E=l/h;return n.endLine+E*(t.line-n.endLine)}else a<0}if(t){let s=o/(R(t).top-i.top);return n.line+s*(t.line-n.line)}else{let s=o/i.height;return n.line+s}}return null}function Se(e,r){return le(r).find(n=>n.element.id===e)}function*Xe(e,r){for(let n=e.parentElement;n;n=n.parentElement)n.tagName===r&&(yield n)}var Z=class{#e;onDidChangeTextEditorSelection(r,n){let{previous:t}=ce(r,n);this.#t(t&&(t.codeElement||t.element))}#t(r){this.#n(this.#e),this.#r(r),this.#e=r}#n(r){r&&r.classList.toggle("code-active-line",!1)}#r(r){r&&r.classList.toggle("code-active-line",!0)}};function Ae(e){document.readyState==="loading"||document.readyState==="uninitialized"?document.addEventListener("DOMContentLoaded",e):e()}var xe=(e,r)=>({postMessage(n,t){e.postMessage({type:n,source:r.settings.source,...t})}});function ue(e){let r=document.getElementById("vscode-markdown-preview-data");if(r){let n=r.getAttribute(e);if(n)return n}throw new Error(`Could not load data for ${e}`)}function fe(e){return JSON.parse(ue(e))}var ee=class{#e=fe("data-settings");get settings(){return this.#e}updateSettings(r){this.#e=r}};var Ce=11;function $e(e,r){var n=r.attributes,t,i,o,s,a;if(!(r.nodeType===Ce||e.nodeType===Ce)){for(var l=n.length-1;l>=0;l--)t=n[l],i=t.name,o=t.namespaceURI,s=t.value,o?(i=t.localName||i,a=e.getAttributeNS(o,i),a!==s&&(t.prefix==="xmlns"&&(i=t.name),e.setAttributeNS(o,i,s))):(a=e.getAttribute(i),a!==s&&e.setAttribute(i,s));for(var f=e.attributes,v=f.length-1;v>=0;v--)t=f[v],i=t.name,o=t.namespaceURI,o?(i=t.localName||i,r.hasAttributeNS(o,i)||e.removeAttributeNS(o,i)):r.hasAttribute(i)||e.removeAttribute(i)}}var te,Ke="http://www.w3.org/1999/xhtml",y=typeof document>"u"?void 0:document,Je=!!y&&"content"in y.createElement("template"),Qe=!!y&&y.createRange&&"createContextualFragment"in y.createRange();function Ze(e){var r=y.createElement("template");return r.innerHTML=e,r.content.childNodes[0]}function et(e){te||(te=y.createRange(),te.selectNode(y.body));var r=te.createContextualFragment(e);return r.childNodes[0]}function tt(e){var r=y.createElement("body");return r.innerHTML=e,r.childNodes[0]}function nt(e){return e=e.trim(),Je?Ze(e):Qe?et(e):tt(e)}function ne(e,r){var n=e.nodeName,t=r.nodeName,i,o;return n===t?!0:(i=n.charCodeAt(0),o=t.charCodeAt(0),i<=90&&o>=97?n===t.toUpperCase():o<=90&&i>=97?t===n.toUpperCase():!1)}function rt(e,r){return!r||r===Ke?y.createElement(e):y.createElementNS(r,e)}function it(e,r){for(var n=e.firstChild;n;){var t=n.nextSibling;r.appendChild(n),n=t}return r}function me(e,r,n){e[n]!==r[n]&&(e[n]=r[n],e[n]?e.setAttribute(n,""):e.removeAttribute(n))}var Me={OPTION:function(e,r){var n=e.parentNode;if(n){var t=n.nodeName.toUpperCase();t==="OPTGROUP"&&(n=n.parentNode,t=n&&n.nodeName.toUpperCase()),t==="SELECT"&&!n.hasAttribute("multiple")&&(e.hasAttribute("selected")&&!r.selected&&(e.setAttribute("selected","selected"),e.removeAttribute("selected")),n.selectedIndex=-1)}me(e,r,"selected")},INPUT:function(e,r){me(e,r,"checked"),me(e,r,"disabled"),e.value!==r.value&&(e.value=r.value),r.hasAttribute("value")||e.removeAttribute("value")},TEXTAREA:function(e,r){var n=r.value;e.value!==n&&(e.value=n);var t=e.firstChild;if(t){var i=t.nodeValue;if(i==n||!n&&i==e.placeholder)return;t.nodeValue=n}},SELECT:function(e,r){if(!r.hasAttribute("multiple")){for(var n=-1,t=0,i=e.firstChild,o,s;i;)if(s=i.nodeName&&i.nodeName.toUpperCase(),s==="OPTGROUP")o=i,i=o.firstChild,i||(i=o.nextSibling,o=null);else{if(s==="OPTION"){if(i.hasAttribute("selected")){n=t;break}t++}i=i.nextSibling,!i&&o&&(i=o.nextSibling,o=null)}e.selectedIndex=n}}},_=1,Ne=11,Pe=3,Oe=8;function D(){}function ot(e){if(e)return e.getAttribute&&e.getAttribute("id")||e.id}function st(e){return function(n,t,i){if(i||(i={}),typeof t=="string")if(n.nodeName==="#document"||n.nodeName==="HTML"||n.nodeName==="BODY"){var o=t;t=y.createElement("html"),t.innerHTML=o}else t=nt(t);else t.nodeType===Ne&&(t=t.firstElementChild);var s=i.getNodeKey||ot,a=i.onBeforeNodeAdded||D,l=i.onNodeAdded||D,f=i.onBeforeElUpdated||D,v=i.onElUpdated||D,h=i.onBeforeNodeDiscarded||D,E=i.onNodeDiscarded||D,x=i.onBeforeElChildrenUpdated||D,ie=i.skipFromChildren||D,G=i.addChild||function(c,d){return c.appendChild(d)},F=i.childrenOnly===!0,S=Object.create(null),H=[];function W(c){H.push(c)}function X(c,d){if(c.nodeType===_)for(var p=c.firstChild;p;){var u=void 0;d&&(u=s(p))?W(u):(E(p),p.firstChild&&X(p,d)),p=p.nextSibling}}function P(c,d,p){h(c)!==!1&&(d&&d.removeChild(c),E(c),X(c,p))}function g(c){if(c.nodeType===_||c.nodeType===Ne)for(var d=c.firstChild;d;){var p=s(d);p&&(S[p]=d),g(d),d=d.nextSibling}}g(n);function L(c){l(c);for(var d=c.firstChild;d;){var p=d.nextSibling,u=s(d);if(u){var m=S[u];m&&ne(d,m)?(d.parentNode.replaceChild(m,d),k(m,d)):L(d)}else L(d);d=p}}function I(c,d,p){for(;d;){var u=d.nextSibling;(p=s(d))?W(p):P(d,c,!0),d=u}}function k(c,d,p){var u=s(d);if(u&&delete S[u],!p){var m=f(c,d);if(m===!1||(m instanceof HTMLElement&&(c=m,g(c)),e(c,d),v(c),x(c,d)===!1))return}c.nodeName!=="TEXTAREA"?_e(c,d):Me.TEXTAREA(c,d)}function _e(c,d){var p=ie(c,d),u=d.firstChild,m=c.firstChild,U,C,V,K,O;e:for(;u;){for(K=u.nextSibling,U=s(u);!p&&m;){if(V=m.nextSibling,u.isSameNode&&u.isSameNode(m)){u=K,m=V;continue e}C=s(m);var J=m.nodeType,B=void 0;if(J===u.nodeType&&(J===_?(U?U!==C&&((O=S[U])?V===O?B=!1:(c.insertBefore(O,m),C?W(C):P(m,c,!0),m=O,C=s(m)):B=!1):C&&(B=!1),B=B!==!1&&ne(m,u),B&&k(m,u)):(J===Pe||J==Oe)&&(B=!0,m.nodeValue!==u.nodeValue&&(m.nodeValue=u.nodeValue))),B){u=K,m=V;continue e}C?W(C):P(m,c,!0),m=V}if(U&&(O=S[U])&&ne(O,u))p||G(c,O),k(O,u);else{var ae=a(u);ae!==!1&&(ae&&(u=ae),u.actualize&&(u=u.actualize(c.ownerDocument||y)),G(c,u),L(u))}u=K,m=V}I(c,m,C);var ye=Me[c.nodeName];ye&&ye(c,d)}var b=n,$=b.nodeType,Te=t.nodeType;if(!F){if($===_)Te===_?ne(n,t)||(E(n),b=it(n,rt(t.nodeName,t.namespaceURI))):b=t;else if($===Pe||$===Oe){if(Te===$)return b.nodeValue!==t.nodeValue&&(b.nodeValue=t.nodeValue),b;b=t}}if(b===t)E(n);else{if(t.isSameNode&&t.isSameNode(b))return;if(k(b,t,F),H)for(var oe=0,qe=H.length;oe<qe;oe++){var se=S[H[oe]];se&&P(se,se.parentNode,!1)}}return!F&&b!==n&&n.parentNode&&(b.actualize&&(b=b.actualize(n.ownerDocument||y)),n.parentNode.replaceChild(b,n)),b}}var at=st($e),Be=at;var ge=Object.freeze({http:"http",https:"https",file:"file",untitled:"untitled",mailto:"mailto",vscode:"vscode","vscode-insiders":"vscode-insiders",notebookCell:"vscode-notebook-cell"});function pe(e,r){return r.toLowerCase().startsWith(e+":")}var Fe=Re(),A=0,T,We=new Z,w=new ee,M=0,j=w.settings.source,q=acquireVsCodeApi(),ve=q.getState()??{},N={...ve,...fe("data-state")};typeof ve.scrollProgress<"u"&&ve?.resource!==N.resource&&(N.scrollProgress=0);q.setState(N);var z=xe(q,w);window.cspAlerter.setPoster(z);window.styleLoadingMonitor.setPoster(z);function be(e){let r=document.getElementsByTagName("img");if(r.length>0){let n=Array.from(r,t=>t.complete?Promise.resolve():new Promise(i=>{t.addEventListener("load",()=>i()),t.addEventListener("error",()=>i())}));Promise.all(n).then(()=>setTimeout(e,0))}else setTimeout(e,0)}Ae(()=>{let n=[...new DOMParser().parseFromString(ue("data-initial-md-content"),"text/html").body.children];document.body.append(...n);for(let i of n)i instanceof HTMLElement&&we(i);let t=N.scrollProgress;if(Ue(),typeof t=="number"&&!w.settings.fragment){be(()=>{A=1,T&&clearTimeout(T),T=window.setTimeout(()=>{A=0},200);let i=Math.max(1,t*document.body.clientHeight);window.scrollTo(0,i)});return}w.settings.scrollPreviewWithEditor&&be(()=>{if(w.settings.fragment){let i;try{i=encodeURIComponent(w.settings.fragment)}catch{i=w.settings.fragment}N.fragment=void 0,q.setState(N);let o=Se(i,M);o&&(A=1,T&&clearTimeout(T),T=window.setTimeout(()=>{A=0},200),Q(o.line,M,w))}else isNaN(w.settings.line)||(A=1,T&&clearTimeout(T),T=window.setTimeout(()=>{A=0},200),Q(w.settings.line,M,w))}),typeof w.settings.selectedLine=="number"&&We.onDidChangeTextEditorSelection(w.settings.selectedLine,M)});var At=(()=>{let e=Fe(r=>{A=1,T&&clearTimeout(T),T=window.setTimeout(()=>{A=0},50),be(()=>Q(r,M,w))},50);return r=>{isNaN(r)||(N.line=r,e(r))}})();window.addEventListener("resize",()=>{A=1,T&&clearTimeout(T),T=window.setTimeout(()=>{A=0},200),je()},!0);function Ue(){let e=document.getElementsByTagName("img"),r=0;for(let n of e){n.id="image-"+r,r+=1;let t=n.getAttribute("data-src"),o=t&&!(pe(ge.http,t)||pe(ge.https,t))?"localImage":"image";n.setAttribute("data-vscode-context",JSON.stringify({webviewSection:o,id:n.id,preventDefaultContextMenuItems:!0,resource:j,imageSource:t}))}}async function Ve(e,r=5){if(!document.hasFocus()&&r>0){setTimeout(()=>{Ve(e,r-1)},20);return}try{await navigator.clipboard.write([new ClipboardItem({"image/png":new Promise(n=>{let t=document.createElement("canvas");t!==null&&(t.width=e.naturalWidth,t.height=e.naturalHeight,t.getContext("2d")?.drawImage(e,0,0)),t.toBlob(i=>{i&&n(i),t.remove()},"image/png")})})])}catch(n){console.error(n);let t=window.getSelection();if(!t){await navigator.clipboard.writeText(e.getAttribute("data-src")??e.src);return}t.removeAllRanges();let i=document.createRange();i.selectNode(e),t.addRange(i),document.execCommand("copy"),t.removeAllRanges()}}window.addEventListener("message",async e=>{let r=e.data;switch(r.type){case"copyImage":{let n=document.getElementById(r.id);n instanceof HTMLImageElement&&Ve(n);return}case"onDidChangeTextEditorSelection":r.source===j&&We.onDidChangeTextEditorSelection(r.line,M);return;case"updateView":r.source===j&&At(r.line);return;case"updateContent":{let n=document.querySelector(".markdown-body"),i=new DOMParser().parseFromString(r.content,"text/html");for(let o of Array.from(i.querySelectorAll("meta")))o.hasAttribute("http-equiv")&&o.remove();if(r.source!==j){j=r.source;let o=i.querySelector(".markdown-body");n.replaceWith(o),we(o)}else{let o=i.querySelector(".markdown-body"),s=o.querySelectorAll("link");for(let a of s)a.remove();o.prepend(...s),Be(n,o,{childrenOnly:!0,onBeforeElUpdated:(a,l)=>{if(Ye(a,l)){let f=a.querySelectorAll("[data-line]"),v=l.querySelectorAll("[data-line]");f.length!==v.length&&console.log("unexpected line number change");for(let h=0;h<f.length;++h){let E=f[h],x=v[h];x&&E.setAttribute("data-line",x.getAttribute("data-line"))}return!1}return a.tagName==="DETAILS"&&l.tagName==="DETAILS"&&a.hasAttribute("open")&&l.setAttribute("open",""),!0},addChild:(a,l)=>{a.appendChild(l),l instanceof HTMLElement&&we(l)}})}++M,window.dispatchEvent(new CustomEvent("vscode.markdown.updateContent")),Ue();break}}},!1);document.addEventListener("dblclick",e=>{if(!w.settings.doubleClickToSwitchToEditor||j.endsWith(".copilotmd"))return;for(let t=e.target;t;t=t.parentNode)if(t.tagName==="A")return;let r=e.pageY,n=de(r,M);typeof n=="number"&&!isNaN(n)&&z.postMessage("didClick",{line:Math.floor(n)})});var xt=["http:","https:","mailto:","vscode:","vscode-insiders:"];document.addEventListener("click",e=>{if(!e)return;let r=e.target;for(;r;){if(r.tagName&&r.tagName==="A"&&r.href){if(r.getAttribute("href")?.startsWith("#"))return;let n=r.getAttribute("data-href");if(!n&&(n=r.getAttribute("href"),n&&xt.some(t=>n.startsWith(t))))return;if(n&&!/^[a-z\-]+:/i.test(n)){z.postMessage("openLink",{href:n}),e.preventDefault(),e.stopPropagation();return}return}r=r.parentElement}},!0);window.addEventListener("scroll",Fe(()=>{if(je(),A>0)return;let e=de(window.scrollY,M);typeof e=="number"&&!isNaN(e)&&z.postMessage("revealLine",{line:e})},50));function je(){N.scrollProgress=window.scrollY/document.body.clientHeight,q.setState(N)}function Ye(e,r){let n=["open"];if(e.isEqualNode(r))return!0;if(e.tagName!==r.tagName||e.textContent!==r.textContent)return!1;let t=[...e.attributes].filter(a=>!n.includes(a.name)),i=[...r.attributes].filter(a=>!n.includes(a.name));if(t.length!==i.length)return!1;for(let a=0;a<t.length;++a){let l=t[a],f=i[a];if(l.name!==f.name||l.value!==f.value&&l.name!=="data-line")return!1}let o=Array.from(e.children),s=Array.from(r.children);return o.length===s.length&&o.every((a,l)=>Ye(a,s[l]))}function we(e){let r=["type","src","nonce","noModule","async"],n=e.tagName==="SCRIPT"?[e]:Array.from(e.getElementsByTagName("script"));for(let t of n){if(!(t instanceof HTMLElement))continue;let i=document.createElement("script"),o=t.innerText;i.text=o;for(let s of r){let a=t.getAttribute?.(s);a&&i.setAttribute(s,a)}t.insertAdjacentElement("afterend",i),t.remove()}}
 </script>
 
     </body>

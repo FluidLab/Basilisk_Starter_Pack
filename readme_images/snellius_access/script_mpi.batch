@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --job-name=odd_oscillations # Name of your job. Choose a name that describes what this job is. 
+#SBATCH -N 1 # How many nodes to use in Snellius. Usually just leave 1 here
+#SBATCH -n 16 # How many processors in the node to reserve for your job (cannot be less than 16. Needs to be multiple of 16.)
+#SBATCH -t 120:00:00  # time limit in format HOURS:MINUTES:SECONDS. maximum 120 hours.
+#SBATCH -e SLURM-%j.err # standard error file output. No need to change this line.
+#SBATCH -o SLURM-%j.out # standard output file output. No need to change this line.
+#SBATCH --partition=rome # Dont need to change this
+module load 2024
+module load foss/2024a
+
+rm odd_droplet_oscillations _odd_droplet_oscillations.c # Removing old pre-compiled files, if they exist
+qcc -source -D_MPI=1 odd_droplet_oscillations.c # Pre-compile using Basilisk qcc
+mpicc -Wall -Wno-unused-result -std=c99 -O2 -D_XOPEN_SOURCE=700 _odd_droplet_oscillations.c -o odd_droplet_oscillations -lm # Compile using the MPI compiler
+
+# -- Run the simulation. This is just one simulation that uses ALL 16 processes by itself (or whatever number you gave in line 4)
+srun odd_droplet_oscillations 50 1 0.2 10000000 10 1e-06 
+

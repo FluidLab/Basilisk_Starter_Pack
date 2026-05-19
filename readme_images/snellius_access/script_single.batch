@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --job-name=odd_oscillations # Name of your job. Choose a name that describes what this job is. 
+#SBATCH -N 1 # How many nodes to use in Snellius. Usually just leave 1 here
+#SBATCH -n 16 # How many processors in the node to reserve for your job (cannot be less than 16. Needs to be multiple of 16.)
+#SBATCH -t 120:00:00  # time limit in format HOURS:MINUTES:SECONDS. maximum 120 hours.
+#SBATCH -e SLURM-%j.err # standard error file output
+#SBATCH -o SLURM-%j.out # standard output file output
+#SBATCH --partition=rome # Dont need to change this
+module load 2024 # Dont need to change this
+module load foss/2024a # Dont need to change this
+
+rm odd_droplet_oscillations # Deleting old executable file, if it exists
+qcc odd_droplet_oscillations.c -lm -O2 -o odd_droplet_oscillations # Compiling the basilisk code
+
+# Below we submit 7 simulations. The "&" character at the end makes them all run at the same time
+# NOTE: you should not run more than 16 simulations in this job if you provided the number 16 in line 4 of the script
+./odd_droplet_oscillations 0.01 0.00 9 0.0001 & # Submitting simulation 1
+./odd_droplet_oscillations 0.01 0.05 9 0.0001 & # Submitting simulation 2
+./odd_droplet_oscillations 0.01 0.10 9 0.0001 & # Submitting simulation 3
+./odd_droplet_oscillations 0.01 0.15 9 0.0001 & # Submitting simulation 4
+./odd_droplet_oscillations 0.01 0.20 9 0.0001 & # Submitting simulation 5
+./odd_droplet_oscillations 0.01 0.25 9 0.0001 & # Submitting simulation 6
+./odd_droplet_oscillations 0.01 0.30 9 0.0001 & # Submitting simulation 7
+
+wait # This is important. leave it here.
